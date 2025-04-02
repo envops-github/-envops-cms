@@ -1,0 +1,234 @@
+{
+    "comparison": {
+        "dataCenters": [
+            {
+                "name": {
+                    "status": "unchanged",
+                    "source": "TS4",
+                    "target": "TS4"
+                },
+                "providerName": {
+                    "status": "unchanged",
+                    "source": "vCloud",
+                    "target": "vCloud"
+                },
+                "apiUrl": {
+                    "status": "unchanged",
+                    "source": "https: //ts4-demo-url.com",
+                    "target": "https: //ts4-demo-url.com"
+                },
+                "apiVersion": {
+                    "status": "unchanged",
+                    "source": "36.3",
+                    "target": "36.3"
+                },
+                "apiUsername": {
+                    "status": "unchanged",
+                    "source": "",
+                    "target": ""
+                },
+                "apiPassword": {
+                    "status": "unchanged",
+                    "source": "",
+                    "target": ""
+                },
+                "org": {
+                    "status": "unchanged",
+                    "source": "huawei-vccs",
+                    "target": "huawei-vccs"
+                },
+                "vdcName": {
+                    "status": "unchanged",
+                    "source": "TS4",
+                    "target": "TS4"
+                },
+                "vApps": [
+                    {
+                        "name": {
+                            "status": "unchanged",
+                            "source": "OMDB",
+                            "target": "OMDB"
+                        },
+                        "vms": [
+                            {
+                                "hostname": {
+                                    "status": "unchanged",
+                                    "source": "ts4-omdb-1",
+                                    "target": "ts4-omdb-1"
+                                },
+                                "status": "unchanged"
+                            },
+                            {
+                                "hostname": {
+                                    "status": "removed",
+                                    "source": "ts4-omdb-2"
+                                },
+                                "status": "removed"
+                            }
+                        ],
+                        "status": "changed"
+                    }
+                ],
+                "networks": [],
+                "status": "changed"
+            },
+            {
+                "name": {
+                    "status": "added",
+                    "target": "TS5"
+                },
+                "providerName": {
+                    "status": "added",
+                    "target": "vCloud"
+                },
+                "apiUrl": {
+                    "status": "added",
+                    "target": "https: //ts5-demo-url.com"
+                },
+                "apiVersion": {
+                    "status": "added",
+                    "target": "36.3"
+                },
+                "apiUsername": {
+                    "status": "added",
+                    "target": ""
+                },
+                "apiPassword": {
+                    "status": "added",
+                    "target": ""
+                },
+                "org": {
+                    "status": "added",
+                    "target": "huawei-vccs"
+                },
+                "vdcName": {
+                    "status": "added",
+                    "target": "TS5"
+                },
+                "vApps": [
+                    {
+                        "name": {
+                            "status": "added",
+                            "target": "OMDB"
+                        },
+                        "vms": [
+                            {
+                                "hostname": {
+                                    "status": "added",
+                                    "target": "ts5-omdb-1"
+                                },
+                                "status": "added"
+                            }
+                        ],
+                        "status": "added"
+                    }
+                ],
+                "networks": [],
+                "status": "added"
+            }
+        ],
+        "status": "changed"
+    },
+    "metadata": {
+        "source": {
+            "type": "environment",
+            "data": {
+                "version": {
+                    "name": "test-version",
+                    "createdAt": "2025-03-06T20:54:02.232Z",
+                    "model": {
+                        "dataCenters": [
+                            {
+                                "name": "TS4",
+                                "vApps": [
+                                    {
+                                        "name": "OMDB",
+                                        "vms": [
+                                            {
+                                                "hostname": "ts4-omdb-1"
+                                            },
+                                            {
+                                                "hostname": "ts4-omdb-2"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "apiUrl": "https: //ts4-demo-url.com",
+                                "networks": [],
+                                "org": "huawei-vccs",
+                                "apiPassword": "",
+                                "apiVersion": "36.3",
+                                "providerName": "vCloud",
+                                "vdcName": "TS4",
+                                "apiUsername": ""
+                            }
+                        ]
+                    }
+                },
+                "environment": {
+                    "name": "test",
+                    "currentVersionName": "test-version"
+                }
+            }
+        },
+        "target": {
+            "type": "environment",
+            "data": {
+                "version": {
+                    "name": "test-version-2",
+                    "createdAt": "2025-03-10T15:31:34.383Z",
+                    "model": {
+                        "dataCenters": [
+                            {
+                                "name": "TS4",
+                                "vApps": [
+                                    {
+                                        "name": "OMDB",
+                                        "vms": [
+                                            {
+                                                "hostname": "ts4-omdb-1"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "apiUrl": "https: //ts4-demo-url.com",
+                                "networks": [],
+                                "org": "huawei-vccs",
+                                "apiPassword": "",
+                                "apiVersion": "36.3",
+                                "providerName": "vCloud",
+                                "vdcName": "TS4",
+                                "apiUsername": ""
+                            },
+                            {
+                                "name": "TS5",
+                                "vApps": [
+                                    {
+                                        "name": "OMDB",
+                                        "vms": [
+                                            {
+                                                "hostname": "ts5-omdb-1"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "apiUrl": "https: //ts5-demo-url.com",
+                                "networks": [],
+                                "org": "huawei-vccs",
+                                "apiPassword": "",
+                                "providerName": "vCloud",
+                                "apiVersion": "36.3",
+                                "vdcName": "TS5",
+                                "apiUsername": ""
+                            }
+                        ]
+                    }
+                },
+                "environment": {
+                    "name": "test",
+                    "currentVersionName": "test-version"
+                }
+            }
+        }
+    }
+}

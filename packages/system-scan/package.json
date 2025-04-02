@@ -1,0 +1,32 @@
+{
+  "name": "@envops-cms/system-scan",
+  "version": "1.0.0",
+  "main": "index.js",
+  "bin": "index.js",
+  "scripts": {
+    "start": "node .",
+    "pkg": "pkg ."
+  },
+  "pkg": {
+    "targets": [
+      "node18-linux",
+      "node18-win",
+      "node18-macos",
+      "node18-linux-arm64",
+      "node18-win-arm64",
+      "node18-macos-arm64"
+    ],
+    "compress": "GZip",
+    "output": "system-scan"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "commander": "^12.1.0",
+    "systeminformation": "^5.23.14"
+  },
+  "devDependencies": {
+    "pkg": "^5.8.1"
+  }
+}

@@ -1,0 +1,6 @@
+{
+	"clientOptions": {
+		"dataDir": ".envops-cms",
+		"autoInit": true
+	}
+}

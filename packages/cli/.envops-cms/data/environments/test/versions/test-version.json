@@ -1,0 +1,242 @@
+{
+  "name": "test-version",
+  "model": {
+    "dataCenters": [
+      {
+        "name": "RefDragon",
+        "vApps": [
+          {
+            "name": "VAPP-TS4-REF-SEE",
+            "vms": [
+              {
+                "hostname": "ts4see01refsc001",
+                "osType": "sles12_64Guest",
+                "hardwareVersion": "vmx-11",
+                "vmToolsVersion": "10358",
+                "cpuCores": 12,
+                "memoryGb": 48,
+                "nics": [
+                  {
+                    "name": "TS4-CP_PEDT_3354_VCCS_SERVICE_PLANE",
+                    "mac": "00:50:56:01:14:5c",
+                    "ipv4Address": "192.168.97.4",
+                    "ipv6Address": null,
+                    "ipType": "IPV_4",
+                    "adapterType": "VMXNET3",
+                    "connectionIndex": 1
+                  },
+                  {
+                    "name": " TS4-CP_EXT_3355_VCCS_OUM",
+                    "mac": "00:50:56:01:14:5b",
+                    "ipv4Address": "10.217.86.121",
+                    "ipv6Address": null,
+                    "ipType": "IPV_4",
+                    "adapterType": "VMXNET3",
+                    "connectionIndex": 0
+                  }
+                ],
+                "disks": [
+                  {
+                    "storageProfile": "TS4-ETC-CP-vCloud-Resource-DSC01-Cluster-Profile-TAC",
+                    "sizeGb": 50,
+                    "busNumber": 0
+                  }
+                ],
+                "versions": [
+                  {
+                    "command": "su - see -c 'ocg_version.sh'",
+                    "name": "Online Mediation(OCG)",
+                    "version": "V500R021C01CP0007"
+                  },
+                  {
+                    "command": "su - see -c 'version.sh'",
+                    "name": "ONIP SNE",
+                    "version": "V300R003C07SPC107"
+                  }
+                ],
+                "sshCreds": {
+                  "host": "10.217.86.121",
+                  "password": "Changeme_123",
+                  "username": "root"
+                }
+              }
+            ],
+            "versions": [
+              {
+                "command": "cat /etc/SuSE-release",
+                "name": "OS",
+                "version": "SUSE 12"
+              }
+            ]
+          }
+        ],
+        "storagePolicies": [
+          {
+            "name": "test",
+            "default": true,
+            "limitGb": 0,
+            "usedGb": 46
+          }
+        ],
+        "apiUrl": "https: //vcloud.dmz.vblock1.mvtc.vodafone.de/api/",
+        "networks": [],
+        "org": "org-huawei-vccs",
+        "providerName": "vCloud",
+        "vdcName": "OVDC-TS4-HUAWEI-VCCS-REF",
+        "apiUsername": "dzegelman",
+        "apiVersion": "36.3",
+        "apiPassword": "wIeJdUqXzOU2a7#YfDi8",
+        "k8s": {
+          "sshCreds": {
+            "host": "10.217.86.174",
+            "password": "Changeme_123",
+            "port": 22,
+            "username": "root"
+          },
+          "statefulSets": [
+            {
+              "name": "cbpmdb-1-1-m",
+              "pods": [
+                {
+                  "name": "cbpmdb-1-1-m-0"
+                },
+                {
+                  "name": "cbpmdb-1-1-m-1"
+                }
+              ]
+            }
+          ],
+          "deployments": [
+            {
+              "name": "bmapp-1",
+              "pods": [
+                {
+                  "name": "bmapp-1-54c76d5f9c-77q7l",
+                  "versions": [
+                    {
+                      "name": "DigitalWare OpenAS",
+                      "version": "V600R002C08SPC005 OpenAS",
+                      "command": "version.sh | sed -n '2p'"
+                    },
+                    {
+                      "name": "PowerCOM USM",
+                      "version": "V100R002C16SPC003(64-bit)",
+                      "command": "sed -n 3p /home/bmpapp/tomcat/webapps/default.war/srv_config/version/version_usm.xml"
+                    },
+                    {
+                      "name": "Huawei JDK",
+                      "version": "2.0.0.311.B003",
+                      "command": "java -version"
+                    },
+                    {
+                      "name": "Docker Version",
+                      "version": "V500R021C00LDE212SPC200",
+                      "command": "/home/bmpapp/tools/version/gv.sh"
+                    },
+                    {
+                      "name": "CBS",
+                      "version": "V500R021C00LDE212SPC200",
+                      "command": "/home/bmpapp/tools/version/gv.sh"
+                    }
+                  ]
+                },
+                {
+                  "name": "bmapp-1-54c76d5f9c-9968m",
+                  "versions": [
+                    {
+                      "name": "DigitalWare OpenAS",
+                      "version": "V600R002C08SPC005 OpenAS",
+                      "command": "version.sh"
+                    },
+                    {
+                      "name": "PowerCOM USM",
+                      "version": "V100R002C16SPC003(64-bit)",
+                      "command": "sed -n 3p /home/bmpapp/tomcat/webapps/default.war/srv_config/version/version_usm.xml"
+                    },
+                    {
+                      "name": "Huawei JDK",
+                      "version": "2.0.0.311.B003",
+                      "command": "java -version"
+                    },
+                    {
+                      "name": "Docker Version",
+                      "version": "V500R021C00LDE212SPC200",
+                      "command": "/home/bmpapp/tools/version/gv.sh"
+                    },
+                    {
+                      "name": "CBS",
+                      "version": "V500R021C00LDE212SPC200",
+                      "command": "/home/bmpapp/tools/version/gv.sh"
+                    }
+                  ]
+                },
+                {
+                  "name": "bmapp-1-54c76d5f9c-bxj8t",
+                  "versions": [
+                    {
+                      "name": "DigitalWare OpenAS",
+                      "version": "V600R002C08SPC005 OpenAS",
+                      "command": "version.sh"
+                    },
+                    {
+                      "name": "PowerCOM USM",
+                      "version": "V100R002C16SPC003(64-bit)",
+                      "command": "sed -n 3p /home/bmpapp/tomcat/webapps/default.war/srv_config/version/version_usm.xml"
+                    },
+                    {
+                      "name": "Huawei JDK",
+                      "version": "2.0.0.311.B003",
+                      "command": "java -version"
+                    },
+                    {
+                      "name": "Docker Version",
+                      "version": "V500R021C00LDE212SPC200",
+                      "command": "/home/bmpapp/tools/version/gv.sh"
+                    },
+                    {
+                      "name": "CBS",
+                      "version": "V500R021C00LDE212SPC200",
+                      "command": "/home/bmpapp/tools/version/gv.sh"
+                    }
+                  ]
+                },
+                {
+                  "name": "bmapp-1-54c76d5f9c-vzxnt",
+                  "versions": [
+                    {
+                      "name": "DigitalWare OpenAS",
+                      "version": "V600R002C08SPC005 OpenAS",
+                      "command": "version.sh"
+                    },
+                    {
+                      "name": "PowerCOM USM",
+                      "version": "V100R002C16SPC003(64-bit)",
+                      "command": "sed -n 3p /home/bmpapp/tomcat/webapps/default.war/srv_config/version/version_usm.xml"
+                    },
+                    {
+                      "name": "Huawei JDK",
+                      "version": "2.0.0.311.B003",
+                      "command": "java -version"
+                    },
+                    {
+                      "name": "Docker Version",
+                      "version": "V500R021C00LDE212SPC200",
+                      "command": "/home/bmpapp/tools/version/gv.sh"
+                    },
+                    {
+                      "name": "CBS",
+                      "version": "V500R021C00LDE212SPC200",
+                      "command": "/home/bmpapp/tools/version/gv.sh"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "namespace": "ns000000000000000000001"
+        }
+      }
+    ]
+  },
+  "createdAt": "Today"
+}

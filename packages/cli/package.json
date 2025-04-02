@@ -1,0 +1,28 @@
+{
+  "name": "@envops-cms/cli",
+  "version": "1.0.9",
+  "private": true,
+  "bin": {
+    "envops-cms": "./dist/es/bin/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc --project tsconfig.rollup.json && rollup -c ./rollup.config.mjs",
+    "test": "vitest"
+  },
+  "type": "module",
+  "dependencies": {
+    "@envops-cms/client": "../client",
+    "@envops-cms/model": "../model",
+    "@envops-cms/utils": "../utils",
+    "cli-table": "^0.3.11",
+    "commander": "^13.1.0",
+    "open-editor": "^5.1.0"
+  },
+  "devDependencies": {
+    "@types/cli-table": "^0.3.4",
+    "@types/node": "^18"
+  }
+}

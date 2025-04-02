@@ -1,0 +1,33 @@
+{
+  "name": "@envops-cms/client",
+  "version": "1.0.0",
+  "private": true,
+  "main": "./dist/cjs/index.js",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/es/index.d.ts",
+        "default": "./dist/es/index.js"
+      },
+      "require": {
+        "types": "./dist/cjs/index.d.ts",
+        "default": "./dist/cjs/index.js"
+      }
+    }
+  },
+  "scripts": {
+    "build": "tsc --project tsconfig.rollup.json && rollup -c ./rollup.config.mjs",
+    "test": "turbo build && rm -f -R .envops-cms && vitest"
+  },
+  "type": "module",
+  "dependencies": {
+    "@envops-cms/html-report": "../html-report",
+    "@envops-cms/model": "../model",
+    "@envops-cms/scanner": "../scanner",
+    "@envops-cms/utils": "../utils",
+    "pkg": "^5.8.1"
+  }
+}

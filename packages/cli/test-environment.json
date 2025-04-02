@@ -1,0 +1,38 @@
+{
+    "name": "test",
+    "currentVersionName": "test-version",
+    "versions": [
+        {
+            "name": "test-version",
+            "createdAt": "2025-03-06T20:54:02.232Z",
+            "model": {
+                "dataCenters": [
+                    {
+                        "name": "TS4",
+                        "vApps": [
+                            {
+                                "name": "OMDB",
+                                "vms": [
+                                    {
+                                        "hostname": "ts4-omdb-1"
+                                    },
+                                    {
+                                        "hostname": "ts4-omdb-2"
+                                    }
+                                ]
+                            }
+                        ],
+                        "apiUrl": "https: //ts4-demo-url.com",
+                        "networks": [],
+                        "org": "huawei-vccs",
+                        "apiPassword": "",
+                        "apiVersion": "36.3",
+                        "providerName": "vCloud",
+                        "vdcName": "TS4",
+                        "apiUsername": ""
+                    }
+                ]
+            }
+        }
+    ]
+}

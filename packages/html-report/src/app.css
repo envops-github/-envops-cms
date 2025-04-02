@@ -1,0 +1,33 @@
+@import "tailwindcss";
+@import "./icons.css";
+
+@plugin "daisyui" {
+    themes: light --default, dark --prefersdark;
+}
+
+@plugin "daisyui/theme" {
+    name: "light";
+    --color-primary: theme(colors.blue.500);
+    --color-success: theme(colors.green.500);
+}
+
+
+@plugin "daisyui/theme" {
+    name: "dark";
+    --color-primary: theme(colors.blue.500);
+    --color-success: theme(colors.green.500);
+}
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+@theme {
+    --color-border: color-mix(in oklab, theme(colors.base-content) 10%, transparent);
+}
+
+* {
+    @apply border-border
+}
+
+body, html {
+    @apply w-full h-full
+}

@@ -1,0 +1,29 @@
+{
+  "name": "@envops-cms/model",
+  "version": "1.0.0",
+  "main": "./dist/cjs/index.js",
+  "private": true,
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/es/index.d.ts",
+        "default": "./dist/es/index.js"
+      },
+      "require": {
+        "types": "./dist/cjs/index.d.ts",
+        "default": "./dist/cjs/index.js"
+      }
+    }
+  },
+  "type": "module",
+  "scripts": {
+    "build": "tsc --project tsconfig.rollup.json && rollup -c ./rollup.config.mjs",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "@envops-cms/utils": "../utils"
+  }
+}

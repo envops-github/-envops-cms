@@ -1,0 +1,37 @@
+{
+  "name": "@envops-cms/scanner",
+  "version": "1.0.0",
+  "private": true,
+  "main": "./dist/cjs/index.js",
+  "bin": {
+    "envops-cms-scanner": "dist/cjs/bin/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc --project tsconfig.rollup.json && rollup -c ./rollup.config.mjs && cp -R ./binaries ./dist/binaries",
+    "test": "vitest"
+  },
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/es/index.d.ts",
+        "default": "./dist/es/index.js"
+      },
+      "require": {
+        "types": "./dist/cjs/index.d.ts",
+        "default": "./dist/cjs/index.js"
+      }
+    }
+  },
+  "dependencies": {
+    "@envops-cms/model": "../model",
+    "@envops-cms/utils": "../utils",
+    "node-ssh": "^13.2.1"
+  },
+  "devDependencies": {
+    "@types/ssh2": "^1.15.4"
+  }
+}
