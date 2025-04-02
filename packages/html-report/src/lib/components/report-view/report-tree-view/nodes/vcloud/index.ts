@@ -276,7 +276,7 @@ export function createVCloudDataCenterNode(
         );
 
         // --- Populate Deployments Group Node ---
-        const deploymmentNodes = createChildNodes(
+        const deploymentNodes = createChildNodes(
             deploymentsGroupNode, // Parent is the "Deployments" group node
             ...(dc.k8s?.deployments || []).map((deployment) => {
 
@@ -304,7 +304,7 @@ export function createVCloudDataCenterNode(
             })
         );
 
-        deploymmentNodes.forEach((depNode) => {
+        deploymentNodes.forEach((depNode) => {
             const deployment = depNode.data as Deployment;
 
             // Create individual VM nodes
@@ -389,13 +389,13 @@ export function createVCloudDataCenterNode(
                             open: false,
                             filter,
                             icons: isComparison
-                                ? [
+                                ? ["",
                                     inheritDcStatus
                                         ? statusIcon(dcComparison.status) // Inherit DC status
                                         : statusIcon(podComparison.status), // Use VM's own status
                                     "clarity--pod-line", // Individual VM icon
                                 ]
-                                : ["clarity--pod-line"],
+                                : ["", "clarity--pod-line"],
                         };
                     }
                 )

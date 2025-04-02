@@ -3,8 +3,8 @@ import { SSHCredentials } from "./environment-model"
 export type DataCenterK8S = {
     sshCreds: SSHCredentials,
     namespace: string,
-    deployments?: Deployment[],
-    statefulSets?: StatefulSet[]
+    deployments: Deployment[],
+    statefulSets: StatefulSet[]
 }
 
 export type Deployment = {

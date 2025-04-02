@@ -36,6 +36,10 @@
   import * as VCloudViews from "./object-views/vcloud";
   import K8s from "./object-views/k8s/k8s.svelte";
   import Deployments from "./object-views/k8s/deployments.svelte";
+  import Statefulsets from "./object-views/k8s/statefulsets.svelte";
+  import DeploymentView from "./object-views/k8s/deployment.svelte";
+  import Statefulset from "./object-views/k8s/statefulset.svelte";
+  import PodView from "./object-views/k8s/pod.svelte";
   let { selected = $bindable() }: { selected: TreeNode } = $props();
 
   const isComparison = selected.data?.hasOwnProperty("status");
@@ -183,8 +187,9 @@
   {/if}
 
   {#if selected.data.type == "k8s.deployments"}
-    {@const dc = selected.parent?.data as DataCenter}
-    {@const comparisonDc = selected.parent?.data as Comparison<DataCenter>}
+    {@const dc = selected.parent?.parent?.data as DataCenter}
+    {@const comparisonDc = selected.parent?.parent
+      ?.data as Comparison<DataCenter>}
 
     <ObjectViewHeader
       name={isComparison ? valueFromComparison(comparisonDc.name) : dc.name}
@@ -192,17 +197,28 @@
       type="K8S Deployments"
     />
 
-    <Deployments {isComparison} bind:selected k8sNode={selected} />
+    <Deployments
+      {isComparison}
+      bind:selected
+      k8sNode={selected.parent as TreeNode}
+    />
   {/if}
 
   {#if selected.data.type == "k8s.statefulsets"}
-    {@const dc = selected.data as DataCenter}
-    {@const comparisonDc = selected.data as Comparison<DataCenter>}
+    {@const dc = selected.parent?.parent?.data as DataCenter}
+    {@const comparisonDc = selected.parent?.parent
+      ?.data as Comparison<DataCenter>}
 
     <ObjectViewHeader
       name={isComparison ? valueFromComparison(comparisonDc.name) : dc.name}
       icon="eos-icons--stateful-set-outlined"
       type="K8S Stateful Sets"
+    />
+
+    <Statefulsets
+      {isComparison}
+      bind:selected
+      k8sNode={selected.parent as TreeNode}
     />
   {/if}
 
@@ -217,6 +233,8 @@
       icon="ant-design--deployment-unit-outlined"
       type="K8S Deployment"
     />
+
+    <DeploymentView {isComparison} bind:selected deploymentNode={selected} />
   {/if}
 
   {#if selected.data.type == "k8s.statefulset"}
@@ -228,6 +246,7 @@
       icon="eos-icons--stateful-set-outlined"
       type="K8S Stateful Set"
     />
+    <Statefulset {isComparison} bind:selected statefulSetNode={selected} />
   {/if}
 
   {#if selected.data.type == "k8s.pod"}
@@ -239,5 +258,7 @@
       icon="clarity--pod-line"
       type="K8S Pod"
     />
+
+    <PodView {isComparison} podNode={selected} />
   {/if}
 </div>
