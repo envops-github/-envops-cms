@@ -18,7 +18,7 @@
   } = $props();
 
   $effect(() => {
-    if (node.filter?.(node, filterValue || "")) {
+    if (filterValue && node.filter?.(node, filterValue)) {
       node.open = true;
     }
   });

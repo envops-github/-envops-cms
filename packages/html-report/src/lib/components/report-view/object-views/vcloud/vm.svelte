@@ -21,7 +21,6 @@
 
   const vm = vmNode.data as VCloud.vm;
   const vmComparison = vmNode.data as Comparison<VCloud.vm>;
-
 </script>
 
 {#snippet NicNameCell(row: Row<(typeof vmNode.data.nics)[number]>)}
@@ -224,6 +223,8 @@
                 accessor: () => d.version,
               }))}
         />
+      {:else}
+          <p class='text-gray-500'>No software versions</p>
       {/if}
     </Tabs.Tab>
   </Tabs.Root>

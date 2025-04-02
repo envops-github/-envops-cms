@@ -129,7 +129,7 @@ export function createVCloudDataCenterNode(
                 label: "K8S",
                 open: false,
                 // Add kubernetes data, ensure 'type' is unique
-                data: { ...dc, type: "k8s" },
+                data: { ...dc.k8s, type: "k8s" },
                 icons: isComparison
                     ? [
                         inheritDcStatus
@@ -154,8 +154,6 @@ export function createVCloudDataCenterNode(
             })[0];
     }
 
-    // --- Populate vApps Children (VMs) ---
-    // Check if vApps exist before mapping
     const vAppNodes = createChildNodes(
         dcVAppsNode,
         ...(dc.vApps as Array<VCloud.vApp | Comparison<VCloud.vApp>>).map(
@@ -176,6 +174,7 @@ export function createVCloudDataCenterNode(
                             "clarity--vmw-app-line",
                         ]
                         : ["clarity--vmw-app-line"],
+                    children: []
                 };
             }
         )
@@ -184,40 +183,10 @@ export function createVCloudDataCenterNode(
     // Populate VM nodes for each vApp node
     vAppNodes.forEach((vappNode) => {
         const vapp = vappNode.data as VCloud.vApp | Comparison<VCloud.vApp>;
-        const vappComparison = vapp as Comparison<VCloud.vApp>;
-
-        const [vmsNode] = createChildNodes(
-            vappNode,
-            // VMs Node configuration within a vApp
-            {
-                label: "VMs",
-                data: { ...vapp, type: "vcloud.dc.vapps.vms" }, // Adjusted type
-                open: false,
-                filter,
-                children: [],
-                icons: isComparison
-                    ? [
-                        inheritDcStatus
-                            ? statusIcon(dcComparison.status) // Inherit DC status
-                            : statusIcon(
-                                // Calculate based on VM changes within this vApp
-                                vappComparison.vms?.some(
-                                    (vm) =>
-                                        (vm).status !==
-                                        "unchanged"
-                                )
-                                    ? "changed"
-                                    : "unchanged"
-                            ),
-                        "ix--screens", // VMs collection icon
-                    ]
-                    : ["ix--screens"],
-            }
-        );
 
         // Create individual VM nodes
         createChildNodes(
-            vmsNode,
+            vappNode,
             ...(vapp.vms as Array<VCloud.vm | Comparison<VCloud.vm>>).map(
                 (vm) => {
                     const vmComparison = vm as Comparison<VCloud.vm>;
@@ -232,12 +201,13 @@ export function createVCloudDataCenterNode(
                         filter,
                         icons: isComparison
                             ? [
+                                "",
                                 inheritDcStatus
                                     ? statusIcon(dcComparison.status) // Inherit DC status
                                     : statusIcon(vmComparison.status), // Use VM's own status
                                 "codicon--vm", // Individual VM icon
                             ]
-                            : ["codicon--vm"],
+                            : ["", "codicon--vm"],
                     };
                 }
             )
@@ -260,7 +230,7 @@ export function createVCloudDataCenterNode(
                 label: "Deployments",
                 open: false,
                 // Data could be a subset or reference, adjust as needed
-                data: { ...dc, type: "k8s.deployments" },
+                data: { ...dc.k8s, type: "k8s.deployments" },
                 icons: isComparison
                     ? [
                         inheritDcStatus
@@ -284,7 +254,7 @@ export function createVCloudDataCenterNode(
                 label: "Stateful Sets",
                 open: false,
                 // Data could be a subset or reference, adjust as needed
-                data: { ...dc, type: "k8s.statefulsets" },
+                data: { ...dc.k8s, type: "k8s.statefulsets" },
                 icons: isComparison
                     ? [
                         inheritDcStatus
@@ -354,13 +324,13 @@ export function createVCloudDataCenterNode(
                             open: false,
                             filter,
                             icons: isComparison
-                                ? [
+                                ? ["",
                                     inheritDcStatus
                                         ? statusIcon(dcComparison.status) // Inherit DC status
                                         : statusIcon(podComparison.status), // Use VM's own status
                                     "clarity--pod-line", // Individual VM icon
                                 ]
-                                : ["clarity--pod-line"],
+                                : ["", "clarity--pod-line"],
                         };
                     }
                 )

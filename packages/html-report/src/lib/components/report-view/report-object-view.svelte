@@ -34,10 +34,11 @@
   import ObjectViewHeader from "./object-view-header.svelte";
   import type { TreeNode } from "../reusable/tree/tree.svelte";
   import * as VCloudViews from "./object-views/vcloud";
+  import K8s from "./object-views/k8s/k8s.svelte";
+  import Deployments from "./object-views/k8s/deployments.svelte";
   let { selected = $bindable() }: { selected: TreeNode } = $props();
 
   const isComparison = selected.data?.hasOwnProperty("status");
-
 </script>
 
 <div class="h-full flex flex-col overflow-auto">
@@ -110,20 +111,6 @@
     <VCloudViews.DataCenterStorage {isComparison} storageNode={selected} />
   {/if}
 
-  {#if selected.data.type == "vcloud.dc.vapps.vms"}
-    {@const vapp = selected.data as VCloud.vApp}
-    {@const comparisonVApp = selected.data as Comparison<VCloud.vApp>}
-
-    <ObjectViewHeader
-      name={isComparison ? valueFromComparison(comparisonVApp.name) : vapp.name}
-      icon="ix--screens"
-      type="VMs"
-      badge={{ label: `vCloud` }}
-    />
-
-    <VCloudViews.Vms bind:selected {isComparison} vmsNode={selected} />
-  {/if}
-
   {#if selected.data.type == "vcloud.dc.vapps.vm"}
     {@const vm = selected.data as VCloud.vm}
     {@const comparisonVm = selected.data as Comparison<VCloud.vm>}
@@ -183,25 +170,29 @@
   <!-- K8S -->
 
   {#if selected.data.type == "k8s"}
-    {@const dc = selected.data as DataCenter}
-    {@const comparisonDc = selected.data as Comparison<DataCenter>}
+    {@const dc = selected.parent?.data as DataCenter}
+    {@const comparisonDc = selected.parent?.data as Comparison<DataCenter>}
 
     <ObjectViewHeader
       name={isComparison ? valueFromComparison(comparisonDc.name) : dc.name}
       icon="mdi--kubernetes"
       type="K8S"
     />
+
+    <K8s {isComparison} bind:selected k8sNode={selected} />
   {/if}
 
   {#if selected.data.type == "k8s.deployments"}
-    {@const dc = selected.data as DataCenter}
-    {@const comparisonDc = selected.data as Comparison<DataCenter>}
+    {@const dc = selected.parent?.data as DataCenter}
+    {@const comparisonDc = selected.parent?.data as Comparison<DataCenter>}
 
     <ObjectViewHeader
       name={isComparison ? valueFromComparison(comparisonDc.name) : dc.name}
       icon="ant-design--deployment-unit-outlined"
       type="K8S Deployments"
     />
+
+    <Deployments {isComparison} bind:selected k8sNode={selected} />
   {/if}
 
   {#if selected.data.type == "k8s.statefulsets"}

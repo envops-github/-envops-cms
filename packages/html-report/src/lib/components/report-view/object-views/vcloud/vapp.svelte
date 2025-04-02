@@ -1,9 +1,14 @@
 <script lang="ts">
   import type { VCloud } from "@envops-cms/model";
-  import { type Comparison } from "@envops-cms/utils";
+  import {
+    valueFromComparison,
+    type Comparison,
+    type PrimitiveComparison,
+  } from "@envops-cms/utils";
   import type { TreeNode } from "../../../reusable/tree/tree.svelte";
-  import PropertyTable from "../property-table.svelte";
   import SummaryCard from "../summary-card.svelte";
+  import Table, { type Row } from "../../../reusable/table/table.svelte";
+  import { statusIcon } from "../../report-view.svelte";
 
   let {
     isComparison,
@@ -32,15 +37,68 @@
         .length}
       targetValue={comparisonVapp.vms.filter((vm) => vm.status !== "removed")
         .length}
-      action={{
-        onclick: () => {
-          vappNode.open = true;
-          selected =
-            vappNode.children?.find((c) => c.label == "VMs") || selected;
-        },
-        label: "Details",
-        icon: "mingcute--align-arrow-right-line",
-      }}
     />
+  </div>
+  <p class="text-xl font-semibold">VMs</p>
+  <div class="flex flex-col gap-2 min-w-fit max-w-6xl">
+    <Table
+      headerless
+      filter={(value, row) => {
+        let name = row.data.hostname;
+        if (isComparison) {
+          name = valueFromComparison(name as PrimitiveComparison);
+        }
+
+        return (name as string)
+          .toLocaleLowerCase()
+          .includes(value.toLocaleLowerCase());
+      }}
+      pagination
+      data={vappNode.data.vms}
+      onRowClick={(row) => {
+        selected =
+          vappNode.children?.find(
+            (c) =>
+              c.label ==
+              (isComparison
+                ? valueFromComparison(row.data.hostname as PrimitiveComparison)
+                : row.data.hostname)
+          ) || selected;
+      }}
+      columns={[
+        {
+          id: "name",
+          label: "Name",
+          snippet: VmNameCell,
+        },
+        {
+          id: "goto",
+          label: "",
+          snippet: GotoIcon,
+        },
+      ]}
+    >
+      {#snippet empty()}
+        <p class="p-4 text-gray-500">No Vms</p>
+      {/snippet}
+    </Table>
+
+    {#snippet VmNameCell(row: Row<(typeof vappNode.data.vms)[number]>)}
+      {@const comparison = row.data as Comparison<(typeof vapp.vms)[number]>}
+      {#if isComparison}
+        <div class="flex gap-2 items-center">
+          <span class={`${statusIcon(comparison.status)} size-5`}></span>
+          {valueFromComparison(comparison.hostname)}
+        </div>
+      {:else}
+        {row.data.hostname}
+      {/if}
+    {/snippet}
+
+    {#snippet GotoIcon()}
+      <div class="w-full flex justify-end">
+        <span class="size-5 mingcute--align-arrow-right-line"> </span>
+      </div>
+    {/snippet}
   </div>
 </div>
