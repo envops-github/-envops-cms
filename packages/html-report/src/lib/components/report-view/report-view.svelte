@@ -24,8 +24,9 @@
   import type { ComparisonReportData, ModelReportData } from "../../../main";
   import { PaneGroup, Pane, PaneResizer } from "paneforge";
   import ReportTreeView from "./report-tree-view/report-tree-view.svelte";
-  import ReportObjectView, { type ViewType } from "./report-object-view.svelte";
+  import ReportObjectView from "./report-object-view.svelte";
   import type { TreeNode } from "../reusable/tree/tree.svelte";
+  import { tick } from "svelte";
 
   let {
     modelReport,

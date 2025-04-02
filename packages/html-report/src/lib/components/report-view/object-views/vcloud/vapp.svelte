@@ -56,6 +56,8 @@
       pagination
       data={vappNode.data.vms}
       onRowClick={(row) => {
+        vappNode.open = true;
+
         selected =
           vappNode.children?.find(
             (c) =>

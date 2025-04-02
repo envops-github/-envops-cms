@@ -58,6 +58,8 @@
       pagination
       data={deploymentNode.data.pods}
       onRowClick={(row) => {
+        deploymentNode.open = true;
+
         selected =
           deploymentNode.children?.find(
             (c) =>

@@ -59,16 +59,21 @@
       pagination
       data={k8sNode.data.deployments}
       onRowClick={(row) => {
-        selected =
-          k8sNode.children
-            ?.find((c) => c.label == "Deployments")
-            ?.children?.find(
+        let deploymentsNode = k8sNode.children?.find(
+          (c) => c.label == "Deployments"
+        );
+
+        if (deploymentsNode) {
+          deploymentsNode.open = true;
+          selected =
+            deploymentsNode?.children?.find(
               (c) =>
                 c.label ==
                 (isComparison
                   ? valueFromComparison(row.data.name as PrimitiveComparison)
                   : row.data.name)
             ) || selected;
+        }
       }}
       columns={[
         {
