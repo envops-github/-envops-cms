@@ -91,7 +91,7 @@ export async function scanBareMetal(dataCenter: DataCenter<"BareMetal">) {
             if (workDir.stderr) {
                 output.sshError = [];
                 output.sshError.push({ id: machine.id, error: `Could not determine working directory on ${machine.sshCreds.host}` });
-                return output
+                continue;
             }
 
             const remoteFile = `${workDir.stdout}/${remoteFilename}`;
@@ -99,12 +99,12 @@ export async function scanBareMetal(dataCenter: DataCenter<"BareMetal">) {
             await ssh.putFile(localFile, remoteFile);
             await ssh.execCommand(`chmod +x ${remoteFilename}`);
 
-            const result = await ssh.execCommand(`${remoteFilename} -o file`);
+            const result = await ssh.execCommand(`./${remoteFilename} -o file`);
 
             if (result.stderr) {
                 output.sshError = [];
                 output.sshError.push({ id: machine.id,  error: `Failed to execute the command ${remoteFilename} -o file on ${machine.sshCreds.host}` });
-                return output
+                continue;
             }
 
             await ssh.getFile(localOutputFile, `${workDir.stdout}/${outputFilename}`);
