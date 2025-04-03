@@ -221,55 +221,81 @@ test("create environment", async (t) => {
                             {
                                 name: 'Taishan',
                                 providerName: 'BareMetal',
-                                bareMetalsshCreds: [{
-                                    host: "10.216.82.178",
-                                    password: "Changeme_123",
-                                    port: 22,
-                                    username: "root"
-                                },
-                                {
-                                    host: "10.216.82.179",
-                                    password: "Changeme_123",
-                                    port: 22,
-                                    username: "root"
-                                },
-                                {
-                                    host: "10.216.82.180",
-                                    password: "Changeme_123",
-                                    port: 22,
-                                    username: "root"
-                                },
-                                {
-                                    host: "10.216.82.181",
-                                    password: "Changeme_me123",
-                                    port: 22,
-                                    username: "root"
-                                },
-                                {
-                                    host: "10.216.82.183",
-                                    password: "Changeme_me123",
-                                    port: 22,
-                                    username: "root"
-                                },
-                                {
-                                    host: "10.216.82.184",
-                                    password: "Changeme_123",
-                                    port: 22,
-                                    username: "root"
-                                },
-                                {
-                                    host: "10.216.82.185",
-                                    password: "Changeme_123",
-                                    port: 22,
-                                    username: "root"
-                                }, {
-                                    host: "10.216.82.186",
-                                    password: "Changeme_123",
-                                    port: 22,
-                                    username: "root"
-                                }]
+                                machines: [
+                                    {
+                                        sshCreds: {
+                                            host: "10.216.82.178",
+                                            password: "Changeme_123",
+                                            port: 22,
+                                            username: "root"
+                                        },
+
+                                    },
+                                    {
+                                        sshCreds: {
+                                            host: "10.216.82.179",
+                                            password: "Changeme_123",
+                                            port: 22,
+                                            username: "root"
+                                        }
+
+                                    },
+                                    {
+                                        sshCreds: {
+                                            host: "10.216.82.180",
+                                            password: "Changeme_123",
+                                            port: 22,
+                                            username: "root"
+                                        }
+
+                                    },
+                                    {
+
+                                        sshCreds: {
+                                            host: "10.216.82.181",
+                                            password: "Changeme_123",
+                                            port: 22,
+                                            username: "root"
+                                        }
+
+                                    },
+                                    {
+                                        sshCreds: {
+                                            host: "10.216.82.183",
+                                            password: "Changeme_123",
+                                            port: 22,
+                                            username: "root"
+                                        }
+
+                                    },
+                                    {
+                                        sshCreds: {
+                                            host: "10.216.82.184",
+                                            password: "Changeme_123",
+                                            port: 22,
+                                            username: "root"
+                                        }
+
+                                    },
+                                    {
+                                        sshCreds: {
+                                            host: "10.216.82.185",
+                                            password: "Changeme_123",
+                                            port: 22,
+                                            username: "root"
+                                        }
+
+                                    }, {
+                                        sshCreds: {
+                                            host: "10.216.82.186",
+                                            password: "Changeme_123",
+                                            port: 22,
+                                            username: "root"
+                                        }
+
+                                    }]
                             }
-                        ], 
+                        ],
                     },
                     createdAt: new Date().toISOString()
                 }

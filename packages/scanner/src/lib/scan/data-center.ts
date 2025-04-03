@@ -2,11 +2,11 @@ import { DataCenter, VCloud, AWS, VCenter, BareMetal} from "@envops-cms/model";
 import { scanVCloudDataCenter } from "./vcloud";
 // import { scanAWSDataCenter } from "./aws";
 //import { scanVCenterDataCenter } from "./vcenter";
-import { scanBareMetalDataCenter } from "./bare-metal";
+import { scanBareMetalDataCenter } from "./bare-metal/index";
 
 export async function scanDataCenter(dataCenter: DataCenter) {
 
-    let providerData = {} as Awaited<ReturnType<typeof scanVCloudDataCenter>>;
+    let providerData = {} as Awaited<ReturnType<typeof scanVCloudDataCenter | typeof scanBareMetalDataCenter>>;
     let foundProvider = false;
 
     if (VCloud.isDataCenter(dataCenter)) {
@@ -26,7 +26,7 @@ export async function scanDataCenter(dataCenter: DataCenter) {
 
     if (BareMetal.isDataCenter(dataCenter)) {
         foundProvider = true;
-         await scanBareMetalDataCenter(dataCenter);
+        providerData = await scanBareMetalDataCenter(dataCenter);
     }
 
     if (!foundProvider) {

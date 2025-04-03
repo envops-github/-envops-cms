@@ -1,58 +1,21 @@
 import { DataCenter } from "@envops-cms/model";
-import { NodeSSH } from "node-ssh";
-import path from "path";
-import { fileURLToPath } from "url";
+import { scanToModel } from "./model";
+import { v4 } from "uuid";
+import { scanBareMetal } from "./machines";
 
 export async function scanBareMetalDataCenter(dataCenter: DataCenter<"BareMetal">) {
 
-    let output = {};
+    dataCenter.machines = dataCenter.machines.map((machine) => ({...machine, id: v4() }));
 
-    if (!dataCenter.bareMetalsshCreds.length) {
-        // output.error = "SSH credentials are required.";
-        // return output
-    }
+    const [
+        machinesData,
+    ] = await Promise.all([
+        scanBareMetal(dataCenter),
+    ])
 
-    const ssh = new NodeSSH();
+    const scannedData = { machinesData};
+    const scannedDataModel = scanToModel(scannedData, dataCenter);
 
-    //await Promise.all(dataCenter.bareMetalsshCreds.map(async (machine) => {
-
-    for (let i = 0; i < dataCenter.bareMetalsshCreds.length; i++) {
-        const machine = dataCenter.bareMetalsshCreds[i];
-
-        try {
-            await ssh.connect({
-                host: machine.host,
-                port: machine.port,
-                username: machine.username,
-                password: machine.password,
-                tryKeyboard: true,
-                readyTimeout: 5000,
-            });
-
-            const __filename = fileURLToPath(import.meta.url);
-            const __dirname = path.dirname(__filename);
-
-            await ssh.putFile('./packages/scanner/src/lib/scan/bare-metal/test.txt', '/root');
-            const result = await ssh.execCommand('./system-info-reader-linux-arm64 -o');
-            await ssh.getFile('/root/system-info.json', __dirname);
-            await ssh.execCommand('rm system-info-reader-linux-arm64 system-info.json')
-
-
-
-        } catch (error) {
-            console.log(machine, error)
-            //output.error = error instanceof Error ? error.message : "Unknown error";
-        } finally {
-            ssh.dispose();
-        }
-
-
-    }
-
-
-    //}))
-
-
-    return output;
+    return { resultModel: scannedDataModel, scannedData }
 
 }
