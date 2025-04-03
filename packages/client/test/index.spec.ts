@@ -229,7 +229,13 @@ test("create environment", async (t) => {
                                             port: 22,
                                             username: "root"
                                         },
-
+                                        cpuCores: 4,
+                                        disks: [],
+                                        hostname: 'ts4app01tacsc001' ,
+                                        memoryGb:44,
+                                        nics: [],
+                                        osName: "EulerOS",
+                                        osVersion: "88"
                                     },
                                     {
                                         sshCreds: {
@@ -237,7 +243,14 @@ test("create environment", async (t) => {
                                             password: "Changeme_123",
                                             port: 22,
                                             username: "root"
-                                        }
+                                        },
+                                        cpuCores: 4,
+                                        disks: [],
+                                        hostname: 'ts4app01tacsc002' ,
+                                        memoryGb:44,
+                                        nics: [],
+                                        osName: "EulerOS",
+                                        osVersion: "88"
 
                                     },
                                     {
@@ -246,7 +259,14 @@ test("create environment", async (t) => {
                                             password: "Changeme_123",
                                             port: 22,
                                             username: "root"
-                                        }
+                                        },
+                                        cpuCores: 4,
+                                        disks: [],
+                                        hostname: 'test' ,
+                                        memoryGb:44,
+                                        nics: [],
+                                        osName: "EulerOS",
+                                        osVersion: "88"
 
                                     },
                                     {
@@ -256,7 +276,14 @@ test("create environment", async (t) => {
                                             password: "Changeme_123",
                                             port: 22,
                                             username: "root"
-                                        }
+                                        },
+                                        cpuCores: 4,
+                                        disks: [],
+                                        hostname: 'test2' ,
+                                        memoryGb:44,
+                                        nics: [],
+                                        osName: "EulerOS",
+                                        osVersion: "88"
 
                                     },
                                     {
@@ -265,7 +292,14 @@ test("create environment", async (t) => {
                                             password: "Changeme_123",
                                             port: 22,
                                             username: "root"
-                                        }
+                                        },
+                                        cpuCores: 4,
+                                        disks: [],
+                                        hostname: 'test3' ,
+                                        memoryGb:44,
+                                        nics: [],
+                                        osName: "EulerOS",
+                                        osVersion: "88"
 
                                     },
                                     {
@@ -274,7 +308,14 @@ test("create environment", async (t) => {
                                             password: "Changeme_123",
                                             port: 22,
                                             username: "root"
-                                        }
+                                        },
+                                        cpuCores: 4,
+                                        disks: [],
+                                        hostname: 'test4' ,
+                                        memoryGb:44,
+                                        nics: [],
+                                        osName: "EulerOS",
+                                        osVersion: "88"
 
                                     },
                                     {
@@ -283,7 +324,14 @@ test("create environment", async (t) => {
                                             password: "Changeme_123",
                                             port: 22,
                                             username: "root"
-                                        }
+                                        },
+                                        cpuCores: 4,
+                                        disks: [],
+                                        hostname: 'test5' ,
+                                        memoryGb:44,
+                                        nics: [],
+                                        osName: "EulerOS",
+                                        osVersion: "88"
 
                                     }, {
                                         sshCreds: {
@@ -291,7 +339,14 @@ test("create environment", async (t) => {
                                             password: "Changeme_123",
                                             port: 22,
                                             username: "root"
-                                        }
+                                        },
+                                        cpuCores: 4,
+                                        disks: [],
+                                        hostname: 'test6' ,
+                                        memoryGb:44,
+                                        nics: [],
+                                        osName: "EulerOS",
+                                        osVersion: "88"
 
                                     }]
                             }
