@@ -46,6 +46,7 @@ export type MachineData = {
 }
 
 
+
 export async function scanBareMetal(dataCenter: DataCenter<"BareMetal">) {
 
     let output = { machines: [] } as MachineData;
@@ -67,14 +68,14 @@ export async function scanBareMetal(dataCenter: DataCenter<"BareMetal">) {
     const tempDir = `${process.cwd()}/temp`;
     mkdirSync(tempDir);
 
-    const remoteFilename = 'system-info-reader-linux-arm64';
+    let remoteFilename;
     const outputFilename = 'system-info.json';
     const localOutputFile = `${tempDir}/${outputFilename}`;
 
     const ssh = new NodeSSH();
 
     for (let i = 0; i < dataCenter.machines.length; i++) {
-        let machine = dataCenter.machines[i] as {id: string, sshCreds: SSHCredentials};
+        let machine = dataCenter.machines[i] as { id: string, sshCreds: SSHCredentials };
 
         try {
             await ssh.connect({
@@ -85,6 +86,44 @@ export async function scanBareMetal(dataCenter: DataCenter<"BareMetal">) {
                 tryKeyboard: true,
                 readyTimeout: 5000,
             });
+
+            const osType = await getOSType(ssh);
+
+            if (!osType.error || osType.os == 'unknown' || osType.arch == 'unknown') {
+                output.sshError = [];
+                output.sshError.push({ id: machine.id, error: `Could not get OS type for ${machine.sshCreds.host}, ${osType.error}` });
+                continue;
+            }
+
+            switch (osType.os) {
+                case "linux":
+                    if (osType.arch == 'arm64') {
+                        remoteFilename = 'system-scan-linux-arm64';
+                    }
+                    if (osType.arch == 'x86_64') {
+                        remoteFilename = 'system-scan-linux-x64';
+                    }
+                    break;
+                case "darwin":
+                    if (osType.arch == 'arm64') {
+                        remoteFilename = 'system-scan-macos-arm64';
+                    }
+                    if (osType.arch == 'x86_64') {
+                        remoteFilename = 'system-scan-macos-x64';
+                    }
+                    break;
+                case "windows":
+                    if (osType.arch == 'arm64') {
+                        remoteFilename = 'system-scan-win-arm64.exe';
+                    }
+                    if (osType.arch == 'x86_64') {
+                        remoteFilename = 'system-scan-win-x64.exe';
+                    }
+                    break;
+                default:
+                    output.sshError = [];
+                    output.sshError.push({ id: machine.id, error: `Could not get OS type for ${machine.sshCreds.host}, ${osType.error}` });
+            }
 
             const workDir = await ssh.execCommand('pwd');
 
@@ -103,7 +142,7 @@ export async function scanBareMetal(dataCenter: DataCenter<"BareMetal">) {
 
             if (result.stderr) {
                 output.sshError = [];
-                output.sshError.push({ id: machine.id,  error: `Failed to execute the command ${remoteFilename} -o file on ${machine.sshCreds.host}` });
+                output.sshError.push({ id: machine.id, error: `Failed to execute the command ${remoteFilename} -o file on ${machine.sshCreds.host}` });
                 continue;
             }
 
@@ -138,4 +177,59 @@ export async function scanBareMetal(dataCenter: DataCenter<"BareMetal">) {
 
     return output;
 
+}
+
+async function getOSType(ssh: NodeSSH) {
+
+    try {
+        let osResult = await ssh.execCommand('uname -s');
+        let archResult = await ssh.execCommand('uname -m');
+
+        if (!osResult.stderr && !archResult.stderr && !osResult.stdout.includes('is not recognized')) {
+            return {
+                os: parseOS(osResult.stdout.trim()),
+                arch: parseArch(archResult.stdout.trim())
+            };
+        }
+
+        const verResult = await ssh.execCommand('ver');
+        if (!verResult.stderr) {
+            const archResult = await ssh.execCommand('echo %PROCESSOR_ARCHITECTURE%');
+            return {
+                os: parseOS(verResult.stdout.trim()),
+                arch: parseArch(archResult.stdout.trim())
+            };
+        }
+
+        return {
+            os: 'unknown',
+            arch: 'unknown',
+            error: 'Could not detect OS type'
+        };
+
+    } catch (error) {
+        return {
+            os: 'unknown',
+            arch: 'unknown',
+            error: error instanceof Error ? error.message : 'Unknown error'
+        };
+
+    }
+
+
+}
+
+function parseOS(osString: string) {
+    const lower = osString.toLowerCase();
+    if (lower.includes('linux')) return 'linux';
+    if (lower.includes('darwin')) return 'darwin';
+    if (lower.includes('windows')) return 'windows';
+    return 'unknown';
+}
+
+function parseArch(archString: string) {
+    const lower = archString.toLowerCase();
+    if (lower === 'aarch64' || lower === 'arm64') return 'arm64';
+    if (lower === 'x86_64' || lower === 'amd64' || lower === 'x86') return 'x86_64';
+    return 'unknown';
 }
