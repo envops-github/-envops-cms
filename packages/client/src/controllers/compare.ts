@@ -211,7 +211,35 @@ function compareModels(
                             }
                         }
                     }
+                },
+                machiines: {
+                    children: {
+                        hostname: true,
+                        osName: true,
+                        osVersion: true,
+                        cpuCores: true,
+                        memoryGb: true,
+                        nics: {
+                            matcher: (src, trg) => src.name == trg.name,
+                            children: {
+                                name: true,
+                                mac: true,
+                                ipv4Address: true,
+                                ipv6Address: true,
+                                ipv4subnet: true,
+                                ipv6subnet: true,
+                            }
+                        },
+                        disks: {
+                            matcher: (src, trg) => src.sizeGb == trg.sizeGb && src.name == trg.name,
+                            children: {
+                                sizeGb: true,
+                                name: true,
+                            }
+                        }
+                    }
                 }
+
             }
         }
     })

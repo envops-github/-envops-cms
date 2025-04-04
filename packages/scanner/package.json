@@ -29,6 +29,7 @@
   "dependencies": {
     "@envops-cms/model": "../model",
     "@envops-cms/utils": "../utils",
+    "fs": "0.0.1-security",
     "node-ssh": "^13.2.1"
   },
   "devDependencies": {
