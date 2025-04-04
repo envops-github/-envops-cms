@@ -220,6 +220,13 @@ function compareModels(
                         osVersion: true,
                         cpuCores: true,
                         memoryGb: true,
+                        versions: {
+                            matcher: (src, trg) => src.name == trg.name,
+                            children: {
+                                name: true,
+                                version: true
+                            }
+                        },
                         nics: {
                             matcher: (src, trg) => src.name == trg.name,
                             children: {

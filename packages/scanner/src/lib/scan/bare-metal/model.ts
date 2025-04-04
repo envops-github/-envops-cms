@@ -10,6 +10,7 @@ export function scanToModel(
     return {
         name: srcModel.name,
         providerName: srcModel.providerName,
+        versions: srcModel.versions,
         machines: scannedData.machinesData.machines.map((machine) => {
 
             const sourceMachine = srcModel.machines.find((d) => d.id == machine.id);
@@ -21,11 +22,16 @@ export function scanToModel(
                     port: sourceMachine?.sshCreds.port,
                     privateKey: sourceMachine?.sshCreds.privateKey
                 },
+                versions: machine.data.versions.map(v => ({
+                    name: v.name,
+                    command: v.command,
+                    version: v.foundVersion || ''
+                })) || [],
                 hostname: machine.data.os.hostname,
                 osName: machine.data.os.distro,
                 osVersion: machine.data.os.release,
                 cpuCores: machine.data.cpu.cores,
-                memoryGb:  Math.round(machine.data.mem.total / Math.pow(1024, 3)) ,
+                memoryGb: Math.round(machine.data.mem.total / Math.pow(1024, 3)),
                 nics: machine.data?.net.map((net) => {
                     return {
                         name: net.ifaceName,

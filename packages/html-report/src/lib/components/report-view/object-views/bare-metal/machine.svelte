@@ -187,24 +187,24 @@
                 name: "Size",
                 unit: "GB",
                 accessor: () => row.data.sizeGb,
-              }
+              },
             ]}
           />
         {/snippet}
       </Table>
     </Tabs.Tab>
-    <!-- <Tabs.Tab
+    <Tabs.Tab
       tab={{
         id: "software",
         icon: "eos-icons--software",
         label: "Software Versions",
       }}
     >
-      {#if machine.versions.length}
+      {#if machine.versions?.length}
         <PropertyTable
           {isComparison}
           rows={isComparison
-            ? machineComparison.versions.map((d) => ({
+            ? (machineComparison.versions || []).map((d) => ({
                 name: valueFromComparison(d.name),
                 accessor: () => d.version,
               }))
@@ -216,6 +216,6 @@
       {:else}
         <p class="text-gray-500">No software versions</p>
       {/if}
-    </Tabs.Tab> -->
+    </Tabs.Tab>
   </Tabs.Root>
 </div>

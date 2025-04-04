@@ -1,4 +1,4 @@
-import { DataCenter } from "@envops-cms/model";
+import { DataCenter, BareMetal } from "@envops-cms/model";
 import { NodeSSH } from "node-ssh";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -32,6 +32,13 @@ export type MachineData = {
             fsSize: {
                 fs: string,
                 size: number
+            }[],
+            versions: {
+                command: string,
+                name: string,
+                foundVersion: string,
+                version: string,
+                error?: string
             }[]
         },
         id: string,
@@ -51,11 +58,6 @@ export async function scanBareMetal(dataCenter: DataCenter<"BareMetal">) {
 
     let output = { machines: [] } as MachineData;
 
-    if (!dataCenter.machines.length) {
-        output.error = "SSH credentials are required.";
-        return output
-    }
-
     const __filename = fileURLToPath(import.meta.url);
     const __dirnameFile = path.dirname(__filename);
     const localFile = path.resolve(__dirnameFile, "../../../../../binaries/system-scan-linux-arm64");
@@ -74,9 +76,8 @@ export async function scanBareMetal(dataCenter: DataCenter<"BareMetal">) {
 
     const ssh = new NodeSSH();
 
-    for (let i = 0; i < dataCenter.machines.length; i++) {
-        let machine = dataCenter.machines[i] as { id: string, sshCreds: SSHCredentials };
-
+    for (let machine of dataCenter.machines as (BareMetal.Machine & { id: string })[]) {
+        machine.versions = [...(machine.versions || []), ...(dataCenter.versions || [])]
         try {
             await ssh.connect({
                 host: machine.sshCreds.host,
@@ -150,10 +151,23 @@ export async function scanBareMetal(dataCenter: DataCenter<"BareMetal">) {
 
             await ssh.execCommand(`rm -f ${remoteFilename} ${outputFilename}`);
 
-            if (fs.existsSync(localOutputFile)) {
-                const outputFile = JSON.parse((fs.readFileSync(localOutputFile, 'utf-8')));
-                output.machines.push({ id: machine.id, data: outputFile });
-            }
+            const outputFile = JSON.parse((fs.readFileSync(localOutputFile, 'utf-8')));
+
+            let machineOut = { id: machine.id, data: outputFile };
+
+            await Promise.all(machine.versions.map(async (version) => {
+                const result = await ssh.execCommand(version.command);
+                const versionOut = { command: version.command, name: version.name };
+
+                if (result.stderr) {
+                    machineOut.data.versions.push({ ...versionOut, error: result.stderr })
+                    return;
+                }
+                machineOut.data.versions.push({ ...versionOut, foundVersion: result.stdout });
+            }))
+
+            output.machines.push(machineOut);
+
 
         } catch (error) {
             output.error = error instanceof Error ? error.message : "Unknown error";

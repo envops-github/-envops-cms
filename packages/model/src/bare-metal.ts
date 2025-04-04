@@ -4,6 +4,11 @@ export type DataCenter = {
     name: string,
     providerName: 'BareMetal',
     machines: Machine[],
+    versions?: {
+        name: string,
+        command: string,
+        version: string
+    }[]
 }
 
 export type Machine = {
@@ -16,6 +21,11 @@ export type Machine = {
     memoryGb: number,
     nics: NIC[],
     disks: Disk[],
+    versions?: {
+        name: string,
+        command: string,
+        version: string
+    }[]
 }
 
 export type NIC = {
@@ -34,7 +44,7 @@ export type Disk = {
 
 
 export function isDataCenter(dc: any): dc is DataCenter {
-    const { name, providerName, machines, ...rest } = <DataCenter>dc;
+    const { name, providerName, machines, versions, ...rest } = <DataCenter>dc;
     return typeof name == 'string'
         && typeof providerName == 'string'
         && !Object.keys(rest).length
