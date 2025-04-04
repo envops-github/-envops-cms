@@ -235,6 +235,132 @@
           ],
           "namespace": "ns000000000000000000001"
         }
+      },
+      {
+        "name": "Taishan",
+        "providerName": "BareMetal",
+        "machines": [
+          {
+            "sshCreds": {
+              "host": "10.216.82.178",
+              "password": "Changeme_123",
+              "port": 22,
+              "username": "root"
+            },
+            "cpuCores": 4,
+            "disks": [],
+            "hostname": "ts4app01refsc001",
+            "memoryGb": 44,
+            "nics": [],
+            "osName": "EulerOS",
+            "osVersion": "88"
+          },
+          {
+            "sshCreds": {
+              "host": "10.216.82.179",
+              "password": "Changeme_123",
+              "port": 22,
+              "username": "root"
+            },
+            "cpuCores": 4,
+            "disks": [],
+            "hostname": "ts4app01refsc002",
+            "memoryGb": 44,
+            "nics": [],
+            "osName": "EulerOS",
+            "osVersion": "88"
+          },
+          {
+            "sshCreds": {
+              "host": "10.216.82.180",
+              "password": "Changeme_123",
+              "port": 22,
+              "username": "root"
+            },
+            "cpuCores": 4,
+            "disks": [],
+            "hostname": "test",
+            "memoryGb": 44,
+            "nics": [],
+            "osName": "EulerOS",
+            "osVersion": "88"
+          },
+          {
+            "sshCreds": {
+              "host": "10.216.82.181",
+              "password": "Changeme_123",
+              "port": 22,
+              "username": "root"
+            },
+            "cpuCores": 4,
+            "disks": [],
+            "hostname": "test2",
+            "memoryGb": 44,
+            "nics": [],
+            "osName": "EulerOS",
+            "osVersion": "88"
+          },
+          {
+            "sshCreds": {
+              "host": "10.216.82.183",
+              "password": "Changeme_123",
+              "port": 22,
+              "username": "root"
+            },
+            "cpuCores": 4,
+            "disks": [],
+            "hostname": "test3",
+            "memoryGb": 44,
+            "nics": [],
+            "osName": "EulerOS",
+            "osVersion": "88"
+          },
+          {
+            "sshCreds": {
+              "host": "10.216.82.184",
+              "password": "Changeme_123",
+              "port": 22,
+              "username": "root"
+            },
+            "cpuCores": 4,
+            "disks": [],
+            "hostname": "test4",
+            "memoryGb": 44,
+            "nics": [],
+            "osName": "EulerOS",
+            "osVersion": "88"
+          },
+          {
+            "sshCreds": {
+              "host": "10.216.82.185",
+              "password": "Changeme_123",
+              "port": 22,
+              "username": "root"
+            },
+            "cpuCores": 4,
+            "disks": [],
+            "hostname": "test5",
+            "memoryGb": 44,
+            "nics": [],
+            "osName": "EulerOS",
+            "osVersion": "88"
+          },
+          {
+            "sshCreds": {
+              "host": "10.216.82.186",
+              "password": "Changeme_123",
+              "port": 22,
+              "username": "root"
+            },
+            "cpuCores": 4,
+            "disks": [],
+            "hostname": "test6",
+            "memoryGb": 44,
+            "nics": [],
+            "osName": "EulerOS",
+            "osVersion": "88"
+          }
+        ]
       }
     ]
   },

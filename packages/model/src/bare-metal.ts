@@ -3,10 +3,10 @@ import { SSHCredentials } from "./environment-model"
 export type DataCenter = {
     name: string,
     providerName: 'BareMetal',
-    machines: Machines[],
+    machines: Machine[],
 }
 
-export type Machines = {
+export type Machine = {
     id?: string,
     sshCreds: SSHCredentials;
     hostname: string,

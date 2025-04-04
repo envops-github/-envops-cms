@@ -3,6 +3,7 @@ import type { TreeNode } from "../../../reusable/tree/tree.svelte";
 import type { DataCenter } from "@envops-cms/model";
 import type { Comparison } from "@envops-cms/utils";
 import { createVCloudDataCenterNode } from "./vcloud";
+import { createBareMetalDataCenterNode } from "./bare-metal";
 
 
 export function createNode(node: Omit<TreeNode, "id">): TreeNode {
@@ -33,6 +34,10 @@ export function createDataCenterNode(
         case "vCloud":
             return createVCloudDataCenterNode(
                 dc as DataCenter<"vCloud"> | Comparison<DataCenter<"vCloud">>
+            );
+        case "BareMetal":
+            return createBareMetalDataCenterNode(
+                dc as DataCenter<"BareMetal"> | Comparison<DataCenter<"BareMetal">>
             );
         // case "AWS":
         //   return createAWSDataCenterNode(

@@ -212,7 +212,8 @@ function compareModels(
                         }
                     }
                 },
-                machiines: {
+                machines: {
+                    matcher: (src, trg) => src.hostname == trg.hostname,
                     children: {
                         hostname: true,
                         osName: true,
@@ -239,7 +240,6 @@ function compareModels(
                         }
                     }
                 }
-
             }
         }
     })

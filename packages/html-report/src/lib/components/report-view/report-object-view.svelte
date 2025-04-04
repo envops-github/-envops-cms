@@ -10,6 +10,10 @@
     | "vcloud.dc.vapp.storage"
     | "vcloud.dc.networks"
     | "vcloud.dc.storage"
+    // Bare Metal
+    | "baremetal.dc"
+    | "baremetal.dc.machines"
+    | "baremetal.dc.machine"
     // AWS
     | "aws.dc"
     //K8s
@@ -24,7 +28,6 @@
 <script lang="ts">
   import type {
     DataCenter,
-    DataCenterK8S,
     Deployment,
     Pod,
     StatefulSet,
@@ -34,6 +37,8 @@
   import ObjectViewHeader from "./object-view-header.svelte";
   import type { TreeNode } from "../reusable/tree/tree.svelte";
   import * as VCloudViews from "./object-views/vcloud";
+  import * as BareMetalViews from "./object-views/bare-metal";
+
   import K8s from "./object-views/k8s/k8s.svelte";
   import Deployments from "./object-views/k8s/deployments.svelte";
   import Statefulsets from "./object-views/k8s/statefulsets.svelte";
@@ -46,6 +51,57 @@
 </script>
 
 <div class="h-full flex flex-col overflow-auto">
+  <!-- BareMetal -->
+
+  {#if selected.data.type == "baremetal.dc"}
+    {@const dc = selected.data as DataCenter<"BareMetal">}
+    {@const comparisonDc = selected.data as Comparison<DataCenter<"BareMetal">>}
+    <ObjectViewHeader
+      name={isComparison ? valueFromComparison(comparisonDc.name) : dc.name}
+      icon="carbon--data-center"
+      type="Data Center"
+      badge={{ label: "BareMetal", class: "bg-purple-600" }}
+    />
+    <BareMetalViews.DataCenter
+      bind:selected
+      {isComparison}
+      dataCenterNode={selected}
+    />
+  {/if}
+
+  {#if selected.data.type == "baremetal.dc.machines"}
+    {@const dc = selected.data as DataCenter<"BareMetal">}
+    {@const comparisonDc = selected.data as Comparison<DataCenter<"BareMetal">>}
+    <ObjectViewHeader
+      name={isComparison ? valueFromComparison(comparisonDc.name) : dc.name}
+      icon="ix--screens"
+      type="Machines"
+      badge={{ label: "BareMetal", class: "bg-purple-600" }}
+    />
+    <BareMetalViews.Machines
+      bind:selected
+      {isComparison}
+      machinesNode={selected}
+    />
+  {/if}
+
+  {#if selected.data.type == "baremetal.dc.machine"}
+    {@const dc = selected.parent?.data as DataCenter<"BareMetal">}
+    {@const comparisonDc = selected.parent?.data as Comparison<
+      DataCenter<"BareMetal">
+    >}
+    <ObjectViewHeader
+      name={isComparison ? valueFromComparison(comparisonDc.name) : dc.name}
+      icon="codicon--vm"
+      type="Machine"
+      badge={{ label: "BareMetal", class: "bg-purple-600" }}
+    />
+    <BareMetalViews.Machine
+      {isComparison}
+      machineNode={selected}
+    />
+  {/if}
+
   <!-- vCloud -->
 
   {#if selected.data.type == "vcloud.dc"}
