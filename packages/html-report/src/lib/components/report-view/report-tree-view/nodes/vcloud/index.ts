@@ -296,9 +296,9 @@ export function createVCloudDataCenterNode(
                             inheritDcStatus
                                 ? statusIcon(dcComparison.status) // Inherit DC status
                                 : statusIcon((deployment as PrimitiveComparison).status), // Use deployment's status
-                            "ant-design--deployment-unit-outlined", // Icon for individual deployment
+                            "material-symbols--deployed-code-outline", // Icon for individual deployment
                         ]
-                        : ["ant-design--deployment-unit-outlined"],
+                        : ["material-symbols--deployed-code-outline"],
                     children: []
                 };
             })
@@ -361,9 +361,9 @@ export function createVCloudDataCenterNode(
                             inheritDcStatus
                                 ? statusIcon(dcComparison.status) // Inherit DC status
                                 : statusIcon((statefulSet as PrimitiveComparison).status), // Use statefulset's status
-                            "eos-icons--stateful-set-outlined", // Icon for individual statefulset (example)
+                            "material-symbols--deployed-code-outline", // Icon for individual statefulset (example)
                         ]
-                        : ["eos-icons--stateful-set-outlined"],
+                        : ["material-symbols--deployed-code-outline"],
                     children: []
                 };
             })

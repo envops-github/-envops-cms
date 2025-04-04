@@ -1,4 +1,5 @@
 import { DataCenter } from "@envops-cms/model";
+import { rmSync } from "fs";
 import { NodeSSH } from "node-ssh";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -31,6 +32,8 @@ export async function scanBareMetalDataCenter(dataCenter: DataCenter<"BareMetal"
 
             const __filename = fileURLToPath(import.meta.url);
             const __dirname = path.dirname(__filename);
+
+            const workDir = ((await ssh.execCommand(`pwd`))).stdout;
 
             await ssh.putFile('./packages/scanner/src/lib/scan/bare-metal/test.txt', '/root');
             const result = await ssh.execCommand('./system-info-reader-linux-arm64 -o');

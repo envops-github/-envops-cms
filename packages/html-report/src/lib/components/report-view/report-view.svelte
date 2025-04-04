@@ -26,7 +26,6 @@
   import ReportTreeView from "./report-tree-view/report-tree-view.svelte";
   import ReportObjectView from "./report-object-view.svelte";
   import type { TreeNode } from "../reusable/tree/tree.svelte";
-  import { tick } from "svelte";
 
   let {
     modelReport,
@@ -40,7 +39,7 @@
 
   let selected: TreeNode | undefined = $state(undefined);
   let tree = $state([]);
-
+  
 </script>
 
 <div class="p-4 border-b">

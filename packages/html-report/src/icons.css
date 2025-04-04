@@ -12,6 +12,18 @@
         mask-size: 100% 100%;
     }
 
+    .material-symbols--deployed-code-outline {
+        display: inline-block;
+        --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23000' d='M11 19.425v-6.85L5 9.1v6.85zm2 0l6-3.475V9.1l-6 3.475zm-1-8.575l5.925-3.425L12 4L6.075 7.425zM4 17.7q-.475-.275-.737-.725t-.263-1v-7.95q0-.55.263-1T4 6.3l7-4.025Q11.475 2 12 2t1 .275L20 6.3q.475.275.738.725t.262 1v7.95q0 .55-.262 1T20 17.7l-7 4.025Q12.525 22 12 22t-1-.275zm8-5.7'/%3E%3C/svg%3E");
+        background-color: currentColor;
+        -webkit-mask-image: var(--svg);
+        mask-image: var(--svg);
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-size: 100% 100%;
+        mask-size: 100% 100%;
+    }
+
     .mdi--filter-outline {
         display: inline-block;
         --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23000' d='M15 19.88c.04.3-.06.62-.29.83a.996.996 0 0 1-1.41 0L9.29 16.7a.99.99 0 0 1-.29-.83v-5.12L4.21 4.62a1 1 0 0 1 .17-1.4c.19-.14.4-.22.62-.22h14c.22 0 .43.08.62.22a1 1 0 0 1 .17 1.4L15 10.75zM7.04 5L11 10.06v5.52l2 2v-7.53L16.96 5z'/%3E%3C/svg%3E");
@@ -803,7 +815,7 @@
         mask-repeat: no-repeat;
         -webkit-mask-size: 100% 100%;
         mask-size: 100% 100%;
-      }
+    }
 
     .eos-icons--stateful-set-outlined {
         display: inline-block;
@@ -815,7 +827,7 @@
         mask-repeat: no-repeat;
         -webkit-mask-size: 100% 100%;
         mask-size: 100% 100%;
-      }
+    }
 
     .ant-design--deployment-unit-outlined {
         display: inline-block;

@@ -7,6 +7,7 @@ export type ScannerConfig = {
     environmentModel: EnvironmentModel,
     environmentName: string,
     environmentVersionName: string,
+    outputPath: string
 }
 
 export class Scanner {
