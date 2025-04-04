@@ -89,7 +89,7 @@ export async function scanBareMetal(dataCenter: DataCenter<"BareMetal">) {
 
             const osType = await getOSType(ssh);
 
-            if (!osType.error || osType.os == 'unknown' || osType.arch == 'unknown') {
+            if (osType.error || osType.os == 'unknown' || osType.arch == 'unknown') {
                 output.sshError = [];
                 output.sshError.push({ id: machine.id, error: `Could not get OS type for ${machine.sshCreds.host}, ${osType.error}` });
                 continue;
