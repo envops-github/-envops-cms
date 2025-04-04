@@ -38,4 +38,4 @@ yarn-error.log*
 
 
 **/.envops-cms
-packages/scanner/scanner-*.json
+packages/scanner/scanner-*
