@@ -2,9 +2,7 @@ import { DataCenter, BareMetal } from "@envops-cms/model";
 import { NodeSSH } from "node-ssh";
 import path from "path";
 import { fileURLToPath } from "url";
-import fs, { mkdirSync, rmSync } from "fs";
-import { SSHCredentials } from "@envops-cms/model";
-
+import fs, { existsSync, mkdirSync, rmSync } from "fs";
 
 export type MachineData = {
     machines: {
@@ -33,7 +31,7 @@ export type MachineData = {
                 fs: string,
                 size: number
             }[],
-            versions: {
+            customVersions: {
                 command: string,
                 name: string,
                 foundVersion: string,
@@ -68,7 +66,10 @@ export async function scanBareMetal(dataCenter: DataCenter<"BareMetal">) {
     }
 
     const tempDir = `${process.cwd()}/temp`;
-    mkdirSync(tempDir);
+    if (!existsSync(tempDir)) {
+        mkdirSync(tempDir);
+    }
+
 
     let remoteFilename;
     const outputFilename = 'system-info.json';
@@ -160,10 +161,10 @@ export async function scanBareMetal(dataCenter: DataCenter<"BareMetal">) {
                 const versionOut = { command: version.command, name: version.name };
 
                 if (result.stderr) {
-                    machineOut.data.versions.push({ ...versionOut, error: result.stderr })
+                    machineOut.data.customVersions.push({ ...versionOut, error: result.stderr })
                     return;
                 }
-                machineOut.data.versions.push({ ...versionOut, foundVersion: result.stdout });
+                machineOut.data.customVersions.push({ ...versionOut, foundVersion: result.stdout });
             }))
 
             output.machines.push(machineOut);

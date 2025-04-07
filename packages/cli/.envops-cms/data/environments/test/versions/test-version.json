@@ -78,7 +78,7 @@
             "usedGb": 46
           }
         ],
-        "apiUrl": "https: //vcloud.dmz.vblock1.mvtc.vodafone.de/api/",
+        "apiUrl": "https://vcloud.dmz.vblock1.mvtc.vodafone.de/api/",
         "networks": [],
         "org": "org-huawei-vccs",
         "providerName": "vCloud",

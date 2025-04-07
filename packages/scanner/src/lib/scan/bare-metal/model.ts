@@ -14,6 +14,7 @@ export function scanToModel(
         machines: scannedData.machinesData.machines.map((machine) => {
 
             const sourceMachine = srcModel.machines.find((d) => d.id == machine.id);
+
             return {
                 sshCreds: {
                     host: sourceMachine?.sshCreds.host || '',
@@ -22,7 +23,7 @@ export function scanToModel(
                     port: sourceMachine?.sshCreds.port,
                     privateKey: sourceMachine?.sshCreds.privateKey
                 },
-                versions: machine.data.versions.map(v => ({
+                versions: (machine.data.customVersions || []).map(v => ({
                     name: v.name,
                     command: v.command,
                     version: v.foundVersion || ''

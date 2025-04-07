@@ -1,7 +1,7 @@
 import type { EnvironmentModel, Scan } from '@envops-cms/model';
 import { v4 } from 'uuid';
 import { scanEnvironmentModel } from './lib/scan/model';
-import { writeFileSync } from 'fs';
+// import { writeFileSync } from 'fs';
 
 export type ScannerConfig = {
     environmentModel: EnvironmentModel,
