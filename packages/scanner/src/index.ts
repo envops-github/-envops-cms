@@ -22,9 +22,7 @@ export class Scanner {
 
         const result = { scannedDataModel, scannedData }
 
-        writeFileSync(`./scan-result-${new Date()}.json`, JSON.stringify(result, undefined, '\t'))
-
-
+        // writeFileSync(`./scan-result-${new Date()}.json`, JSON.stringify(result, undefined, '\t'))
         const id = v4()
 
         const endTime = new Date();
