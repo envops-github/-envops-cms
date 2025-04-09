@@ -4,8 +4,7 @@ import { v4 } from "uuid";
 import { scanBareMetal } from "./machines";
 
 export async function scanBareMetalDataCenter(dataCenter: DataCenter<"BareMetal">) {
-
-    dataCenter.machines = dataCenter.machines.map((machine) => ({...machine, id: v4() }));
+    dataCenter.machines = dataCenter.machines.map((machine) => ({ ...machine, id: v4() }));
 
     const [
         machinesData,
@@ -13,7 +12,7 @@ export async function scanBareMetalDataCenter(dataCenter: DataCenter<"BareMetal"
         scanBareMetal(dataCenter),
     ])
 
-    const scannedData = { machinesData};
+    const scannedData = { machinesData };
     const scannedDataModel = scanToModel(scannedData, dataCenter);
 
     return { resultModel: scannedDataModel, scannedData }

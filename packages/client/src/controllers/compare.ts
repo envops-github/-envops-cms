@@ -74,6 +74,27 @@ function compareModels(
                 }
             }
 
+            if (dataCenter.k8s) {
+                return {
+                    ...dataCenter, k8s: {
+                        deployments: dataCenter.k8s.deployments.map((deployment) =>
+                        ({
+                            ...deployment, pods: deployment.pods.map((pod) =>
+                                ({ ...pod, versions: [...(pod.versions ?? []), ...(deployment.versions ?? [])] })
+
+                            )
+                        })),
+                        statefulSets: dataCenter.k8s.statefulSets.map((statefulSet) =>
+                        ({
+                            ...statefulSet, pods: statefulSet.pods.map((pod) =>
+                                ({ ...pod, versions: [...(pod.versions ?? []), ...(statefulSet.versions ?? [])] })
+
+                            )
+                        })),
+                    }
+                }
+            }
+
             return dataCenter;
         })
     }
