@@ -47,5 +47,6 @@ export function isDataCenter(dc: any): dc is DataCenter {
     const { name, providerName, machines, versions, ...rest } = <DataCenter>dc;
     return typeof name == 'string'
         && typeof providerName == 'string'
-        && !Object.keys(rest).length
+        && Array.isArray(machines)
+       // && !Object.keys(rest).length
 }
