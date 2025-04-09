@@ -13,6 +13,7 @@ export async function scanBareMetalDataCenter(dataCenter: DataCenter<"BareMetal"
     ])
 
     const scannedData = { machinesData };
+    console.log(machinesData.sshError, machinesData)
     const scannedDataModel = scanToModel(scannedData, dataCenter);
 
     return { resultModel: scannedDataModel, scannedData }
