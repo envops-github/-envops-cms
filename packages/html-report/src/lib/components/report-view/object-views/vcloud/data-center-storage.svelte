@@ -84,11 +84,7 @@
               name: "Limit",
               unit: "GB",
               accessor: () => row.data.limitGb,
-            },
-            {
-              name: "Default",
-              accessor: () => row.data.default,
-            },
+            }
           ]}
         />
       {/snippet}

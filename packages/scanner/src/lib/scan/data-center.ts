@@ -24,6 +24,7 @@ export async function scanDataCenter(dataCenter: DataCenter) {
     //     providerData = await scanVCenterDataCenter(dataCenter)
     // }
 
+
     if (BareMetal.isDataCenter(dataCenter)) {
         foundProvider = true;
         providerData = await scanBareMetalDataCenter(dataCenter);

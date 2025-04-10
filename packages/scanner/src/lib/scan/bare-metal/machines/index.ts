@@ -2,7 +2,7 @@ import { DataCenter, BareMetal } from "@envops-cms/model";
 import { NodeSSH } from "node-ssh";
 import path from "path";
 import { fileURLToPath } from "url";
-import fs, { existsSync, mkdirSync, rmSync } from "fs";
+import fs, { existsSync, mkdirSync, realpathSync, rmSync } from "fs";
 
 export type MachineData = {
     machines: {
@@ -53,23 +53,12 @@ export type MachineData = {
 
 
 export async function scanBareMetal(dataCenter: DataCenter<"BareMetal">) {
-
     let output = { machines: [] } as MachineData;
 
     const __filename = fileURLToPath(import.meta.url);
     const __dirnameFile = path.dirname(__filename);
-    const localFile = path.resolve(__dirnameFile, "../../../../../binaries/system-scan-linux-arm64");
-
-    if (!fs.existsSync(localFile)) {
-        output.error = `The executable file ${localFile} was not found locally`;
-        return output
-    }
 
     const tempDir = `${process.cwd()}/temp`;
-    if (!existsSync(tempDir)) {
-        mkdirSync(tempDir);
-    }
-
 
     let remoteFilename;
     const outputFilename = 'system-info.json';
@@ -96,6 +85,7 @@ export async function scanBareMetal(dataCenter: DataCenter<"BareMetal">) {
                 output.sshError.push({ id: machine.id, error: `Could not get OS type for ${machine.sshCreds.host}, ${osType.error}` });
                 continue;
             }
+
 
             switch (osType.os) {
                 case "linux":
@@ -137,6 +127,13 @@ export async function scanBareMetal(dataCenter: DataCenter<"BareMetal">) {
 
             const remoteFile = `${workDir.stdout}/${remoteFilename}`;
 
+            const localFile = path.resolve(__dirnameFile, `../../../../../binaries/${remoteFilename}`);
+
+            if (!fs.existsSync(localFile)) {
+                output.error = `The executable file ${localFile} was not found locally`;
+                return output
+            }
+
             await ssh.putFile(localFile, remoteFile);
             await ssh.execCommand(`chmod +x ${remoteFilename}`);
 
@@ -148,27 +145,36 @@ export async function scanBareMetal(dataCenter: DataCenter<"BareMetal">) {
                 continue;
             }
 
+            if (!existsSync(tempDir)) {
+                mkdirSync(tempDir, { recursive: true });
+            }
+
             await ssh.getFile(localOutputFile, `${workDir.stdout}/${outputFilename}`);
 
+
             await ssh.execCommand(`rm -f ${remoteFilename} ${outputFilename}`);
+
 
             const outputFile = JSON.parse((fs.readFileSync(localOutputFile, 'utf-8')));
 
             let machineOut = { id: machine.id, data: outputFile };
 
             await Promise.all(machine.versions.map(async (version) => {
+
                 const result = await ssh.execCommand(version.command);
                 const versionOut = { command: version.command, name: version.name };
+
+                machineOut.data.customVersions = [];
 
                 if (result.stderr) {
                     machineOut.data.customVersions.push({ ...versionOut, error: result.stderr })
                     return;
                 }
                 machineOut.data.customVersions.push({ ...versionOut, foundVersion: result.stdout });
+
             }))
 
             output.machines.push(machineOut);
-
 
         } catch (error) {
             output.error = error instanceof Error ? error.message : "Unknown error";
