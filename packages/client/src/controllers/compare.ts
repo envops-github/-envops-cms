@@ -170,10 +170,8 @@ function compareModels(
                     matcher: (src, trg) => src.name == trg.name,
                     children: {
                         name: true,
-                        gatewayIpv4: true,
-                        gatewayIpv6: true,
-                        subnetIpv4: true,
-                        subnetIpv6: true
+                        rangeIpv4: true,
+                        rangeIpv6: true,
                     }
                 },
                 k8s: {
@@ -260,7 +258,7 @@ function compareModels(
                             }
                         },
                         disks: {
-                            matcher: (src, trg) => src.sizeGb == trg.sizeGb && src.name == trg.name,
+                            matcher: (src, trg) => src.sizeGb == trg.sizeGb,
                             children: {
                                 sizeGb: true,
                                 name: true,

@@ -25,10 +25,8 @@ export type StoragePolicy = {
 
 export type Network = {
     name: string,
-    gatewayIpv4: string,
-    subnetIpv4: string,
-    gatewayIpv6: string,
-    subnetIpv6: string,
+    rangeIpv4: string,
+    rangeIpv6: string,
 }
 
 export type vApp = {
@@ -102,12 +100,10 @@ export function isDataCenter(dc: any): dc is DataCenter {
 }
 
 export function isNetwork(net: any): net is Network {
-    const { name, gatewayIpv4, gatewayIpv6, subnetIpv4, subnetIpv6, ...rest } = <Network>net;
+    const { name, rangeIpv4, rangeIpv6, ...rest } = <Network>net;
     return typeof name == 'string'
-        && typeof subnetIpv6 == 'string'
-        && typeof subnetIpv4 == 'string'
-        && typeof gatewayIpv6 == 'string'
-        && typeof gatewayIpv4 == 'string'
+        && typeof rangeIpv4 == 'string'
+        && typeof rangeIpv6 == 'string'
         && !Object.keys(rest).length
 }
 

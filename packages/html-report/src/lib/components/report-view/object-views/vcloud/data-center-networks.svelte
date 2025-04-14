@@ -74,21 +74,13 @@
               accessor: () => row.data.name,
             },
             {
-              name: "Gateway IPv4",
-              accessor: () => row.data.gatewayIpv4,
+              name: "IPv4 Range",
+              accessor: () => row.data.rangeIpv4,
             },
             {
-              name: "Subnet IPv4",
-              accessor: () => row.data.subnetIpv4,
-            },
-            {
-              name: "Gateway IPv6",
-              accessor: () => row.data.gatewayIpv6,
-            },
-            {
-              name: "Subnet IPv6",
-              accessor: () => row.data.subnetIpv6,
-            },
+              name: "IPv4 Range",
+              accessor: () => row.data.rangeIpv6,
+            }
           ]}
         />
       {/snippet}

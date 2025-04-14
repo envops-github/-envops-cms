@@ -23,7 +23,8 @@ export type VdcNetworks = {
         ipScopes: {
             ipScope: {
                 gateway: string;
-                netmask: string
+                netmask: string;
+                subnetPrefixLength: number
             }[]
         }
     }
