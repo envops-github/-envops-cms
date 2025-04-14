@@ -1,7 +1,7 @@
 import { EnvironmentModel, ModelMetadata, VCenter, VCloud } from "@envops-cms/model";
 import { compare } from "@envops-cms/utils";
 import { EnvopsCmsClient } from "..";
-import path from "node:path";
+import path, { toNamespacedPath } from "node:path";
 import { generateHtml } from "@envops-cms/html-report";
 
 
@@ -20,6 +20,7 @@ export async function compareModelsController(
     target: EnvironmentModel & { modelMetadata: ModelMetadata },
     options?: CompareModelsControllerOptions
 ) {
+
     const comparison = compareModels(source, target);
 
     const comparisonReport = {
@@ -63,7 +64,7 @@ function compareModels(
 
             if (VCloud.isDataCenter(dataCenter)) {
 
-                return {
+                dataCenter = {
                     ...dataCenter, vApps: dataCenter.vApps.map((vApp) =>
                     ({
                         ...vApp, vms: vApp.vms.map((vm) =>
@@ -72,10 +73,11 @@ function compareModels(
                         )
                     }))
                 }
+
             }
 
             if (dataCenter.k8s) {
-                return {
+                dataCenter = {
                     ...dataCenter, k8s: {
                         deployments: dataCenter.k8s.deployments.map((deployment) =>
                         ({
@@ -91,9 +93,12 @@ function compareModels(
 
                             )
                         })),
+                        sshCreds: dataCenter.k8s.sshCreds,
+                        namespace: dataCenter.k8s.namespace
                     }
                 }
             }
+
 
             return dataCenter;
         })

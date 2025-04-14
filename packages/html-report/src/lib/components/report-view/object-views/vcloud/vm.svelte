@@ -140,12 +140,13 @@
                 accessor: () => row.data.adapterType,
               },
               {
-                name: row.data.ipv4Address ? "IPv4 Address" : "IPv6 Address",
-                accessor: () =>
-                  row.data.ipv4Address
-                    ? row.data.ipv4Address || true
-                    : row.data.ipv6Address || true,
+                name: "IPv4 Address",
+                accessor: () => row.data.ipv4Address || true
               },
+              {
+                name: "IPv6 Address",
+                accessor: () => row.data.ipv6Address || true
+              }
             ]}
           />
         {/snippet}

@@ -58,16 +58,21 @@ export async function scanBareMetal(dataCenter: DataCenter<"BareMetal">) {
     const __filename = fileURLToPath(import.meta.url);
     const __dirnameFile = path.dirname(__filename);
 
-    const tempDir = `${process.cwd()}/temp`;
+    const tempDir = `${process.cwd()}/temp_${dataCenter.name}`;
 
     let remoteFilename;
-    const outputFilename = 'system-info.json';
-    const localOutputFile = `${tempDir}/${outputFilename}`;
+
+    if (!existsSync(tempDir)) {
+        mkdirSync(tempDir, { recursive: true });
+    }
 
     const ssh = new NodeSSH();
 
     for (let machine of dataCenter.machines as (BareMetal.Machine & { id: string })[]) {
-        machine.versions = [...(machine.versions || []), ...(dataCenter.versions || [])]
+        machine.versions = [...(machine.versions || []), ...(dataCenter.versions || [])];
+
+        const outputFilename = `system-info.json`;
+        const localOutputFile = `${tempDir}/system-info_${machine.id}.json`;
         try {
             await ssh.connect({
                 host: machine.sshCreds.host,
@@ -145,15 +150,9 @@ export async function scanBareMetal(dataCenter: DataCenter<"BareMetal">) {
                 continue;
             }
 
-            if (!existsSync(tempDir)) {
-                mkdirSync(tempDir, { recursive: true });
-            }
-
             await ssh.getFile(localOutputFile, `${workDir.stdout}/${outputFilename}`);
 
-
             await ssh.execCommand(`rm -f ${remoteFilename} ${outputFilename}`);
-
 
             const outputFile = JSON.parse((fs.readFileSync(localOutputFile, 'utf-8')));
 
@@ -177,7 +176,7 @@ export async function scanBareMetal(dataCenter: DataCenter<"BareMetal">) {
             output.machines.push(machineOut);
 
         } catch (error) {
-            output.error = error instanceof Error ? error.message : "Unknown error";
+            output.error = error instanceof Error ? `${error.message} for ${machine.sshCreds.host}` : "Unknown error";
         } finally {
             ssh.dispose();
 

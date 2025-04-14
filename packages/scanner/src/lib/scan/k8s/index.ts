@@ -201,7 +201,7 @@ async function scanPod(versions: { command: string, name: string }[], podName: s
   let output = [];
 
   for (const version of versions) {
-    const result = await ssh.execCommand(`kubectl exec -it ${podName}  -n ${dataCenter.k8s?.namespace} -- csh -c '${version.command}'`);
+    const result = await ssh.execCommand(`kubectl exec -it ${podName}  -n ${dataCenter.k8s?.namespace} -- csh -c "${version.command}"`);
     output.push({
       name: version.name,
       command: version.command,
