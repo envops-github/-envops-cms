@@ -32,7 +32,7 @@
       node.onclick?.(node);
       onselect?.(node);
     }}
-    class="peer h-8 w-full flex flex-nowrap items-center justify-start gap-1 px-2 duration-100 hover:bg-primary hover:text-primary-content {selected?.id ==
+    class="peer shrink-0 h-8 w-full flex flex-nowrap items-center justify-start gap-1 px-2 duration-100 hover:bg-primary hover:text-primary-content {selected?.id ==
     node.id
       ? 'bg-primary text-primary-content	'
       : ''}"

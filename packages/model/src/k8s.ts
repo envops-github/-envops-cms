@@ -14,7 +14,7 @@ export type Deployment = {
         name: string,
         command: string,
         version: string
-    }[]
+    }[],
 }
 
 export type StatefulSet = {
