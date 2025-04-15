@@ -2,6 +2,7 @@ import { DataCenter } from "@envops-cms/model";
 import { VCloudDataCenterApiData } from "./api";
 import { MachineData, Version } from "../machines";
 import { K8s } from "../k8s/index";
+import ipaddr from 'ipaddr.js';
 
 
 export function scanToModel(
@@ -24,12 +25,11 @@ export function scanToModel(
             default: s.default
         })),
         networks: scannedData.apiData.networks?.map(n => ({
-            name: n.name,
-            gatewayIpv4: n.configuration.ipScopes.ipScope[0].gateway,
-            subnetIpv4: n.configuration.ipScopes.ipScope[0].netmask,
-            gatewayIpv6: n.configuration.ipScopes.ipScope[1]?.gateway,
-            subnetIpv6: n.configuration.ipScopes.ipScope[1]?.netmask
-        })),
+                name: n.name,
+                ipv4Cidr: `${n.configuration.ipScopes.ipScope[0].gateway}/${n.configuration.ipScopes.ipScope[0].subnetPrefixLength}`,
+                ipv6Cidr: n.configuration.ipScopes.ipScope[1] ? `${(ipaddr.parse(n.configuration.ipScopes.ipScope[1].gateway)).toNormalizedString()}/${n.configuration.ipScopes.ipScope[1]?.subnetPrefixLength}` : '',
+            })
+            ),
         vApps: scannedData.apiData.vApps?.map((v) => ({
             name: v.name,
             vms: v.children?.vm.map((c) => {

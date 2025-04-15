@@ -18,7 +18,8 @@ export type Deployment = {
   type: 'deployment'
   name: string,
   pods: Pod[],
-  labelApp: string,
+  labelKey: string,
+  labelValue: string,
   error?: string
 }
 
@@ -26,7 +27,8 @@ export type StatefulSet = {
   type: 'statefulSet'
   name: string,
   pods: Pod[],
-  labelApp: string,
+  labelKey: string,
+  labelValue: string,
   error?: string
 }
 
@@ -50,7 +52,6 @@ type Resource = {
     selector: {
       matchLabels: {
         app: string
-        hwsapp: string
       }
     }
   }
@@ -116,10 +117,12 @@ async function getDeployments(dataCenter: DataCenter, ssh: NodeSSH) {
   const parsedDeployment: JsonData = JSON.parse(deploymentsData.stdout);
 
   for (const set of parsedDeployment.items) {
+    const [labelKey, labelValue] = Object.entries(set.spec.selector.matchLabels)[0];
     let output = {
       type: 'deployment',
       name: set.metadata.name,
-      labelApp: set.spec.selector.matchLabels.app,
+      labelKey,
+      labelValue,
       pods: []
     } as Deployment;
 
@@ -148,12 +151,13 @@ async function getStatefulSets(dataCenter: DataCenter, ssh: NodeSSH) {
 
   const parsedStatedulSets: JsonData = JSON.parse(statefulSetsData.stdout);
 
-
   for (const set of parsedStatedulSets.items) {
+    const [labelKey, labelValue] = Object.entries(set.spec.selector.matchLabels)[0];
     let output = {
       type: 'statefulSet',
       name: set.metadata.name,
-      labelApp: set.spec.selector.matchLabels.app,
+      labelKey,
+      labelValue,
       pods: []
     } as StatefulSet;
 
@@ -169,7 +173,7 @@ async function getStatefulSets(dataCenter: DataCenter, ssh: NodeSSH) {
 
 async function getPods(resourceData: Deployment | StatefulSet, dataCenter: DataCenter, ssh: NodeSSH) {
 
-  const getPodData = await ssh.execCommand(`kubectl get pods -n ${dataCenter.k8s?.namespace} --selector=app=${resourceData.labelApp} -o json`);
+  const getPodData = await ssh.execCommand(`kubectl get pods -n ${dataCenter.k8s?.namespace} --selector=${resourceData.labelKey}=${resourceData.labelValue} -o json`);
 
   if (getPodData.stderr) {
     resourceData.error = `Unable to retrieve pod data from ${resourceData.name}: ${getPodData.stderr}`;
@@ -201,7 +205,8 @@ async function scanPod(versions: { command: string, name: string }[], podName: s
   let output = [];
 
   for (const version of versions) {
-    const result = await ssh.execCommand(`kubectl exec -it ${podName}  -n ${dataCenter.k8s?.namespace} -- csh -c "${version.command}"`);
+    const result = await ssh.execCommand(`kubectl exec ${podName}  -n ${dataCenter.k8s?.namespace} -- csh -c "${version.command}"`);
+    console.log(result.stdout, version.command, podName)
     output.push({
       name: version.name,
       command: version.command,

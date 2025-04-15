@@ -30,6 +30,7 @@
     "@envops-cms/model": "../model",
     "@envops-cms/utils": "../utils",
     "fs": "0.0.1-security",
+    "ipaddr.js": "^2.2.0",
     "node-ssh": "^13.2.1"
   },
   "devDependencies": {

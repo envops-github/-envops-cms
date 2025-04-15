@@ -158,17 +158,22 @@ export async function scanBareMetal(dataCenter: DataCenter<"BareMetal">) {
 
             let machineOut = { id: machine.id, data: outputFile };
 
+
+
             await Promise.all(machine.versions.map(async (version) => {
 
                 const result = await ssh.execCommand(version.command);
                 const versionOut = { command: version.command, name: version.name };
 
-                machineOut.data.customVersions = [];
-
                 if (result.stderr) {
                     machineOut.data.customVersions.push({ ...versionOut, error: result.stderr })
                     return;
                 }
+
+                if (!machineOut.data.customVersions) {
+                    machineOut.data.customVersions = [];
+                }
+
                 machineOut.data.customVersions.push({ ...versionOut, foundVersion: result.stdout });
 
             }))

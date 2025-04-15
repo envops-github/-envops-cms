@@ -33,7 +33,7 @@ export function scanToModel(
                 osVersion: machine.data.os.release,
                 cpuCores: machine.data.cpu.cores,
                 memoryGb: Math.round(machine.data.mem.total / Math.pow(1024, 3)),
-                nics: machine.data?.net.map((net) => {
+                nics: machine.data?.net.filter((net) => net.ifaceName != 'lo').map((net) => {
                     return {
                         name: net.ifaceName,
                         mac: net.mac,

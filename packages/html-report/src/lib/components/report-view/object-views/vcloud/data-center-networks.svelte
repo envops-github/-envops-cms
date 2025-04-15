@@ -74,12 +74,12 @@
               accessor: () => row.data.name,
             },
             {
-              name: "IPv4 Range",
-              accessor: () => row.data.rangeIpv4,
+              name: "IPv4 CIDR",
+              accessor: () => row.data.ipv4Cidr,
             },
             {
-              name: "IPv4 Range",
-              accessor: () => row.data.rangeIpv6,
+              name: "IPv6 CIDR",
+              accessor: () => row.data.ipv6Cidr,
             }
           ]}
         />

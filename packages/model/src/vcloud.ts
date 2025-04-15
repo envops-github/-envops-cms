@@ -25,8 +25,8 @@ export type StoragePolicy = {
 
 export type Network = {
     name: string,
-    rangeIpv4: string,
-    rangeIpv6: string,
+    ipv4Cidr: string,
+    ipv6Cidr: string,
 }
 
 export type vApp = {
@@ -100,10 +100,10 @@ export function isDataCenter(dc: any): dc is DataCenter {
 }
 
 export function isNetwork(net: any): net is Network {
-    const { name, rangeIpv4, rangeIpv6, ...rest } = <Network>net;
+    const { name, ipv4Cidr, ipv6Cidr, ...rest } = <Network>net;
     return typeof name == 'string'
-        && typeof rangeIpv4 == 'string'
-        && typeof rangeIpv6 == 'string'
+        && typeof ipv4Cidr == 'string'
+        && typeof ipv6Cidr == 'string'
         && !Object.keys(rest).length
 }
 

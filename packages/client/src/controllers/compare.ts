@@ -175,8 +175,8 @@ function compareModels(
                     matcher: (src, trg) => src.name == trg.name,
                     children: {
                         name: true,
-                        rangeIpv4: true,
-                        rangeIpv6: true,
+                        ipv4Cidr: true,
+                        ipv6Cidr: true,
                     }
                 },
                 k8s: {
