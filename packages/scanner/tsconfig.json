@@ -4,7 +4,7 @@
   "compilerOptions": {
     "lib": ["esnext"],
     "types": ["@types/node"],
-    "outDir": "./dist",
+    "outDir": "./dist"
   },
   "include": ["."],
   "exclude": ["node_modules", "dist", "test"]

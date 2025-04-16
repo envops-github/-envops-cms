@@ -1,7 +1,7 @@
 import { DataCenter, BareMetal } from "@envops-cms/model";
 import { NodeSSH } from "node-ssh";
-import path from "path";
-import { fileURLToPath } from "url";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { existsSync, mkdirSync, readFileSync, rmSync } from "node:fs";
 
 export type MachineData = {
@@ -55,8 +55,8 @@ export type MachineData = {
 export async function scanBareMetal(dataCenter: DataCenter<"BareMetal">) {
     let output = { machines: [] } as MachineData;
 
-    const __filename = fileURLToPath(import.meta.url);
-    const __dirnameFile = path.dirname(__filename);
+    const filename = fileURLToPath(import.meta.url);
+    const dirnameFile = path.dirname(filename);
 
     const tempDir = `${process.cwd()}/temp_${dataCenter.name}`;
 
@@ -132,7 +132,7 @@ export async function scanBareMetal(dataCenter: DataCenter<"BareMetal">) {
 
             const remoteFile = `${workDir.stdout}/${remoteFilename}`;
 
-            const localFile = path.resolve(__dirnameFile, `../../../../../binaries/${remoteFilename}`);
+            const localFile = path.resolve(dirnameFile, `../../../../../binaries/${remoteFilename}`);
 
             if (!existsSync(localFile)) {
                 output.error = `The executable file ${localFile} was not found locally`;
