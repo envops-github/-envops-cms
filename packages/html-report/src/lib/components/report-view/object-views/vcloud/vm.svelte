@@ -141,11 +141,11 @@
               },
               {
                 name: "IPv4 Address",
-                accessor: () => row.data.ipv4Address || true
+                accessor: () => row.data.ipv4Address
               },
               {
                 name: "IPv6 Address",
-                accessor: () => row.data.ipv6Address || true
+                accessor: () => row.data.ipv6Address
               }
             ]}
           />

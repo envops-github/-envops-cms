@@ -65,8 +65,8 @@ export type vm = {
 export type NIC = {
     name: string,
     mac: string,
-    ipv4Address: string | null,
-    ipv6Address: string | null,
+    ipv4Address: string,
+    ipv6Address: string,
     ipType: "IPV_4" | "IPV_6" //TODO
     adapterType: string,
     connectionIndex: number

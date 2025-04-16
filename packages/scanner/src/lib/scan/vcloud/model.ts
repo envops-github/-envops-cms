@@ -46,8 +46,8 @@ export function scanToModel(
                     nics: c.section[3].networkConnection?.map((n) => ({
                         name: n.network,
                         mac: n.macAddress,
-                        ipv4Address: n.ipType == "IPV_4" ? n.ipAddress : null,
-                        ipv6Address: n.ipType == "IPV_6" ? n.ipAddress : null,
+                        ipv4Address: n.ipType == "IPV_4" ? n.ipAddress : "",
+                        ipv6Address: n.ipType == "IPV_6" ? n.ipAddress : "",
                         ipType: n.ipType,
                         adapterType: n.networkAdapterType,
                         connectionIndex: n.networkConnectionIndex
