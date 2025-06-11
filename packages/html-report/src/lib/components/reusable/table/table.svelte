@@ -2,7 +2,7 @@
     lang="ts"
     module
 >
-    import type { MaybePromise, ComparisonStatus} from "@envops-cms/utils";
+    import type { MaybePromise, ComparisonStatus } from "@envops-cms/utils";
     import { untrack, type Snippet } from "svelte";
     import { slide } from "svelte/transition";
     import { v4 } from "uuid";
@@ -23,7 +23,10 @@
 
     export type StatusMeta = {
         label: string;
-        color: string;
+        classes: {
+            active: string;
+            inactive: string;
+        };
     };
 
     export type Label = "missing" | "unchanged" | "changed" | "unknown";
@@ -53,10 +56,34 @@
     }
 
     export const statusMeta: Record<Label, StatusMeta> = {
-        missing: { label: "Missing", color: "red" },
-        unchanged: { label: "Unchanged", color: "green" },
-        changed: { label: "Changed", color: "yellow" },
-        unknown: { label: "Unknown", color: "purple" },
+        missing: {
+            label: "Missing",
+            classes: {
+                active: "bg-red-500 text-white",
+                inactive: "border border-red-500 text-red-500 bg-white",
+            },
+        },
+        unchanged: {
+            label: "Unchanged",
+            classes: {
+                active: "bg-green-500 text-white",
+                inactive: "border border-green-500 text-green-500 bg-white",
+            },
+        },
+        changed: {
+            label: "Changed",
+            classes: {
+                active: "bg-yellow-500 text-white",
+                inactive: "border border-yellow-500 text-yellow-500 bg-white",
+            },
+        },
+        unknown: {
+            label: "Unknown",
+            classes: {
+                active: "bg-purple-500 text-white",
+                inactive: "border border-purple-500 text-purple-500 bg-white",
+            },
+        },
     };
 
     export function toRows<TData>(data?: TData[]): Row<TData>[] {
@@ -104,13 +131,13 @@
     let filterValue = $state("");
 
     let rows: Row[] = $state([]);
-    let filteredRows: Row[] = $derived(
-        rows.filter(
+    let filteredRows: Row[] = $derived.by(() => {
+        return rows.filter(
             row =>
                 !statusExcluded[statusToStatus(row.data.status)] &&
                 (!filterValue || filter?.(filterValue, row))
-        )
-    );
+        );
+    });
     let displayedRows: Row[] = $derived.by(() => {
         const start = currentPage * itemsPerPage;
         return filteredRows.slice(start, start + itemsPerPage);
@@ -185,12 +212,12 @@
                 {#each labels as status}
                     <button
                         aria-label={statusMeta[status].label}
-                        class="{statusExcluded[status as Label]
-                            ? `border border-${statusMeta[status].color}-500 text-${statusMeta[status].color}-500 bg-white`
-                            : `bg-${statusMeta[status].color}-500 text-white`}  min-w-[1.5rem] text-center rounded-lg transition-colors"
-                        onclick={() => filterStatus(status as Label)}
+                        class="{statusExcluded[status]
+                            ? statusMeta[status].classes.inactive
+                            : statusMeta[status].classes.active} min-w-[1.5rem] text-center rounded-lg transition-colors"
+                        onclick={() => filterStatus(status)}
                     >
-                        {statusCounts[status as Label]}
+                        {statusCounts[status]}
                     </button>
                 {/each}
             </div>
