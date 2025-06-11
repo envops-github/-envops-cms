@@ -208,7 +208,7 @@
             </label>
 
             <div class="flex items-center gap-1 mb-2 h-full">
-                <span class="text-gray-600">Status:</span>
+                <span class="text-gray-600 text-sm font-medium">Status:</span>
                 {#each labels as status}
                     <button
                         aria-label={statusMeta[status].label}
